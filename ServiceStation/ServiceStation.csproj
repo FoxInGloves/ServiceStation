@@ -6,11 +6,15 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <NeutralLanguage>ru</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>
       <Folder Include="Repository\Abstraction\" />
       <Folder Include="Repository\Implementation\" />
+      <Folder Include="Resources\Strings\" />
+      <Folder Include="Resources\Themes\" />
+      <Folder Include="Services\Command\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +32,13 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Languages\ru-ru.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ru-ru.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>
