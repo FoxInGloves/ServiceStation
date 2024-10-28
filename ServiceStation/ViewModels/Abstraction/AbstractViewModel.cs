@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ServiceStation.ViewModels.Abstraction;
 
-public class BaseViewModel : INotifyPropertyChanged
+public class AbstractViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 

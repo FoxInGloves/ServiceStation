@@ -6,7 +6,7 @@ using ServiceStation.ViewModels.Abstraction;
 
 namespace ServiceStation.ViewModels.Implementation;
 
-public class MainViewModel : BaseViewModel
+public class MainViewModel : AbstractViewModel
 {
     private double _widthOfNavigationPanel;
     
@@ -31,16 +31,8 @@ public class MainViewModel : BaseViewModel
     
     private void ToggleSize()
     {
-        if (_isExpanded)
-        {
-            WidthOfNavigationPanel = CollapsedWidth;
-            _isExpanded = !_isExpanded;
-        }
-        else
-        {
-            WidthOfNavigationPanel = ExpandedWidth;
-            _isExpanded = !_isExpanded;
-        }
-        
+        WidthOfNavigationPanel = _isExpanded ? CollapsedWidth : ExpandedWidth;
+
+        _isExpanded = !_isExpanded;
     }
 }
