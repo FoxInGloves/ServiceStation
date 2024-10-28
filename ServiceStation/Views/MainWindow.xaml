@@ -3,10 +3,70 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ServiceStation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        WindowState="Maximized"
+        Title="Наше название" Height="450" Width="800">
+    <Window.Resources>
 
+        <!--TODO вынести в отдельный класс-->
+        <Style x:Key="PageNavigationButton" TargetType="Button">
+            <Setter Property="Height" Value="45" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="Frame">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+    </Window.Resources>
+
+    <!--<WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" 
+                      IsHitTestVisibleInChrome="True"
+                      GlassFrameThickness="0.7"/>
+    </WindowChrome.WindowChrome>-->
+
+    <!--<Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>-->
+
+    <!--<StackPanel Grid.Row="0" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+            <Button Command="{Binding MinimizeWindowCommand}"
+                    Style="{StaticResource MinimizeWindowButton}"/>
+            
+            <Button Command="{Binding MaximizeWindowCommand}"
+                    Style="{StaticResource MaximizeWindowButton}"/>
+            
+            <Button Command="{Binding CloseWindowCommand}"
+                    Style="{StaticResource CloseWindowButton}"/>
+        </StackPanel>-->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="Column" Width="{Binding WidthOfNavigationPanel, Mode=OneWay}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0"
+                    Background="Red"
+                    HorizontalAlignment="Stretch">
+            <Button Command="{Binding MoveNavigationPanelCommand}"
+                    Background="Blue"
+                    Style="{StaticResource PageNavigationButton}" />
+            <Button Command="{Binding A}"
+                    Background="BlueViolet"
+                    Style="{StaticResource PageNavigationButton}" />
+            <Button Style="{StaticResource PageNavigationButton}" />
+        </StackPanel>
+
+        <Frame Grid.Column="1">
+
+        </Frame>
     </Grid>
 </Window>
