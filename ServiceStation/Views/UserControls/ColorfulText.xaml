@@ -24,8 +24,8 @@
     </UserControl.Resources>
     
     <Grid>
-        <Border Background="{Binding}">
-            <TextBlock Text="{Binding}"/>
+        <Border Background="{Binding BackgroundColor}">
+            <TextBlock Text="{Binding Text}"/>
         </Border>
     </Grid>
 </UserControl>
