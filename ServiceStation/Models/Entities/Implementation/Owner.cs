@@ -1,6 +1,6 @@
-﻿using ServiceStation.Models.Abstraction;
+﻿using ServiceStation.Models.Entities.Abstraction;
 
-namespace ServiceStation.Models.Implementation;
+namespace ServiceStation.Models.Entities.Implementation;
 
 public class Owner : Entity
 {

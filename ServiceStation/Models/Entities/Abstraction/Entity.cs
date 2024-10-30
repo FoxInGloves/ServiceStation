@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServiceStation.Models.Abstraction;
+namespace ServiceStation.Models.Entities.Abstraction;
 
 public class Entity
 {
