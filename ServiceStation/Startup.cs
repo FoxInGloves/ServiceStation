@@ -14,7 +14,16 @@ public static class Startup
     [STAThread]
     public static void Main()
     {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .WriteTo.Console()
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                restrictedToMinimumLevel: LogEventLevel.Warning)
+            .CreateLogger();
+
         var host = Host.CreateDefaultBuilder()
+            .UseSerilog()
             .ConfigureServices(services =>
             {
                 services.AddSingleton<App>();
