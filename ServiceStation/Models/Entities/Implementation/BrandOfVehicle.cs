@@ -2,7 +2,7 @@
 
 namespace ServiceStation.Models.Entities.Implementation;
 
-public class BrandOfVehicle : Entity
+public class BrandOfVehicle : AbstractEntity
 {
     public string Brand { get; set; }
     

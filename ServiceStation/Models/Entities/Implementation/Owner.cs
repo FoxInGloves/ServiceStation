@@ -2,7 +2,7 @@
 
 namespace ServiceStation.Models.Entities.Implementation;
 
-public class Owner : Entity
+public class Owner : AbstractEntity
 {
     public string FirstName { get; set; }
     

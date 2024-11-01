@@ -2,7 +2,7 @@
 
 namespace ServiceStation.Models.Entities.Implementation;
 
-public class Manufacturer : Entity
+public class Manufacturer : AbstractEntity
 {
     public string Name { get; set; }
 }

@@ -2,7 +2,7 @@
 
 namespace ServiceStation.Models.Entities.Implementation;
 
-public class Defect : Entity
+public class Defect : AbstractEntity
 {
     public string VehicleId { get; set; }
     

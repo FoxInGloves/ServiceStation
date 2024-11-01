@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServiceStation.Models.Implementation;
+using ServiceStation.Models.Entities.Implementation;
 
 namespace ServiceStation.Repository;
 

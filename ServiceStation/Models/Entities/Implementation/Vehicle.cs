@@ -2,7 +2,7 @@
 
 namespace ServiceStation.Models.Entities.Implementation;
 
-public class Vehicle : Entity
+public class Vehicle : AbstractEntity
 {
     public string OwnerId { get; set; }
     
@@ -11,10 +11,11 @@ public class Vehicle : Entity
     
     public string BrandOfVehicleId { get; set; }
     
-    public string YearOfRelease { get; set; }
+    public DateOnly YearOfRelease { get; set; }
     
     public string LicenseNumber { get; set; }
     
+    //TODO мб поставить statusEnum
     public string Status { get; set; }
     
     public DateTime ServiceCallDate { get; set; }
