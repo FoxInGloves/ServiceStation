@@ -7,9 +7,7 @@ public class DataBaseContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        const string connectionString = "Host=localhost;Port=5432;Database=Temp;Username=postgres;Password=123456789";
-        
-        optionsBuilder.UseNpgsql(connectionString);
+        Database.EnsureCreated();
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -11,8 +11,7 @@
 
     <ItemGroup>
       <Folder Include="Models\Entities\" />
-      <Folder Include="Repository\Abstraction\" />
-      <Folder Include="Repository\Implementation\" />
+      <Folder Include="Models\Enums\" />
       <Folder Include="Resources\Strings\" />
       <Folder Include="Resources\Themes\" />
     </ItemGroup>
