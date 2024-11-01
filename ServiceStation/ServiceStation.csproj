@@ -11,7 +11,6 @@
 
     <ItemGroup>
       <Folder Include="Models\Entities\" />
-      <Folder Include="Models\Enums\" />
       <Folder Include="Resources\Strings\" />
       <Folder Include="Resources\Themes\" />
     </ItemGroup>
