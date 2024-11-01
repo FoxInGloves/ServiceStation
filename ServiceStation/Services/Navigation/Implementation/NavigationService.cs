@@ -8,7 +8,7 @@ namespace ServiceStation.Services.Navigation.Implementation;
 
 public class NavigationService : INavigationService
 {
-    public (Page, BaseViewModel) NavigateToPage(BaseViewModel viewModel)
+    public (Page, AbstractViewModel) NavigateToPage(AbstractViewModel viewModel)
     {
         var pageAndVm = GetPage(viewModel);
 
@@ -17,7 +17,7 @@ public class NavigationService : INavigationService
         return pageAndVm;
     }
 
-    public (Window, BaseViewModel) NavigateToWindow(BaseViewModel viewModel)
+    public (Window, AbstractViewModel) NavigateToWindow(AbstractViewModel viewModel)
     {
         var windowAndVm = GetWindow(viewModel);
 
@@ -26,11 +26,11 @@ public class NavigationService : INavigationService
         return windowAndVm;
     }
 
-    private static (Page, BaseViewModel) GetPage(BaseViewModel viewModel)
+    private static (Page, AbstractViewModel) GetPage(AbstractViewModel viewModel)
     {
         var viewModelType = viewModel.GetType();
 
-        //TODO изменить путь к моим страницам
+        //TODO изменить путь к моим страницам и добавить try catch 
         var viewName = viewModelType.FullName?.Replace("ViewModels.Implementation.MainViewModels", "Views.MainViews")
             .Replace("ViewModel", "Page");
 
@@ -45,7 +45,7 @@ public class NavigationService : INavigationService
         return (page, viewModel);
     }
 
-    private static (Window, BaseViewModel) GetWindow(BaseViewModel viewModel)
+    private static (Window, AbstractViewModel) GetWindow(AbstractViewModel viewModel)
     {
         var viewModelType = viewModel.GetType();
 

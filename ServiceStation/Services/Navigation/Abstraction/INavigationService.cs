@@ -6,7 +6,7 @@ namespace ServiceStation.Services.Navigation.Abstraction;
 
 public interface INavigationService
 {
-    public (Page, BaseViewModel) NavigateToPage(BaseViewModel viewModel);
-    
-    public (Window, BaseViewModel) NavigateToWindow(BaseViewModel viewModel);
+    (Page, AbstractViewModel) NavigateToPage(AbstractViewModel viewModel);
+
+    (Window, AbstractViewModel) NavigateToWindow(AbstractViewModel viewModel);
 }
