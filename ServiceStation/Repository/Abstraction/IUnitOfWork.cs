@@ -8,9 +8,11 @@ public interface IUnitOfWork
     
     IGenericRepository<Defect> DefectsRepository { get; }
     
-    IGenericRepository<Worker> WorkersRepository { get; }
+    IGenericRepository<ModelOfVehicle> ModelsRepository { get; }
     
     IGenericRepository<Owner> OwnersRepository { get; }
     
     IGenericRepository<Vehicle> VehicleRepository { get; }
+    
+    IGenericRepository<Worker> WorkersRepository { get; }
 }
