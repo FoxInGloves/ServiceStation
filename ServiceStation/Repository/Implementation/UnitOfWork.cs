@@ -7,7 +7,7 @@ public class UnitOfWork(DataBaseContext context) : IUnitOfWork
 {
     private IGenericRepository<BrandOfVehicle>? _brandsOfVehicleRepository;
     private IGenericRepository<Defect>? _defectsRepository;
-    private IGenericRepository<Manufacturer>? _manufacturersRepository;
+    private IGenericRepository<Worker>? _workersRepository;
     private IGenericRepository<Owner>? _ownersRepository;
     private IGenericRepository<Vehicle>? _vehicleRepository;
     
@@ -17,8 +17,8 @@ public class UnitOfWork(DataBaseContext context) : IUnitOfWork
     public IGenericRepository<Defect> DefectsRepository =>
         _defectsRepository ?? new GenericRepository<Defect>(context);
     
-    public IGenericRepository<Manufacturer> ManufacturersRepository =>
-        _manufacturersRepository ?? new GenericRepository<Manufacturer>(context);
+    public IGenericRepository<Worker> WorkersRepository =>
+        _workersRepository ?? new GenericRepository<Worker>(context);
     
     public IGenericRepository<Owner> OwnersRepository =>
         _ownersRepository ?? new GenericRepository<Owner>(context);

@@ -14,7 +14,7 @@ public class DataBaseContext : DbContext
     {
         modelBuilder.Entity<BrandOfVehicle>().HasKey(o => o.Id);
         modelBuilder.Entity<Defect>().HasKey(o => o.Id);
-        modelBuilder.Entity<Manufacturer>().HasKey(o => o.Id);
+        modelBuilder.Entity<Worker>().HasKey(o => o.Id);
         modelBuilder.Entity<Owner>().HasKey(o => o.Id);
         modelBuilder.Entity<Vehicle>().HasKey(o => o.Id);
     }
@@ -23,7 +23,7 @@ public class DataBaseContext : DbContext
     
     public DbSet<Defect> Defects { get; set; }
     
-    public DbSet<Manufacturer> Manufacturers { get; set; }
+    public DbSet<Worker> Workers { get; set; }
     
     public DbSet<Owner> Owners { get; set; }    
     

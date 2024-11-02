@@ -8,7 +8,7 @@ public interface IUnitOfWork
     
     IGenericRepository<Defect> DefectsRepository { get; }
     
-    IGenericRepository<Manufacturer> ManufacturersRepository { get; }
+    IGenericRepository<Worker> WorkersRepository { get; }
     
     IGenericRepository<Owner> OwnersRepository { get; }
     

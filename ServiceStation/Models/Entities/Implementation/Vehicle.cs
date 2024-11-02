@@ -7,8 +7,6 @@ public class Vehicle : AbstractEntity
     public string OwnerId { get; set; }
     
     //TODO разобраться нужны ли оба свойства ниже
-    public string ManufacturerId { get; set; }
-    
     public string BrandOfVehicleId { get; set; }
     
     public DateOnly YearOfRelease { get; set; }
@@ -22,7 +20,9 @@ public class Vehicle : AbstractEntity
     
     public virtual Owner Owner { get; set; }
     
-    public virtual Manufacturer Manufacturer { get; set; }
+    public virtual ICollection<Worker> CollectionOfWorkers { get; set; }
+    
+    public virtual ICollection<Defect> CollectionsOfDefects { get; set; }
     
     public virtual BrandOfVehicle BrandOfVehicle { get; set; }
 }
