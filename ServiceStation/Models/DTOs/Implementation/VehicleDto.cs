@@ -9,7 +9,7 @@ public class VehicleDto : AbstractDto
     
     public string OwnerName { get; set; }
     
-    public DateOnly YearOfRelease { get; set; }
+    public string YearOfRelease { get; set; }
     
     public string LicenseNumber { get; set; }
     
@@ -17,7 +17,7 @@ public class VehicleDto : AbstractDto
     
     public string StatusColor { get; set; }
     
-    public DateTime ServiceCallDate { get; set; }
+    public string ServiceCallDate { get; set; }
     
     public ICollection<Worker> CollectionOfWorkers { get; set; }
     
