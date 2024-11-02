@@ -1,4 +1,4 @@
-﻿namespace ServiceStation.Services.ResultPattern.Abstraction;
+﻿namespace ServiceStation.Services.ResultT.Abstraction;
 
 public class Result
 {

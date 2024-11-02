@@ -1,12 +1,12 @@
-﻿using ServiceStation.Services.ResultPattern.Abstraction;
+﻿using ServiceStation.Services.ResultT.Abstraction;
 
-namespace ServiceStation.Services.ResultPattern.Implementation;
+namespace ServiceStation.Services.ResultT.Implementation;
 
 public sealed class ResultT<TValue> : Result
 {
     private readonly TValue? _value;
     
-    private ResultT(TValue value) : base()
+    private ResultT(TValue value)
     {
         _value = value;
     }
@@ -28,6 +28,6 @@ public sealed class ResultT<TValue> : Result
     public static ResultT<TValue> Success(TValue value) =>
         new(value);
     
-    public static new ResultT<TValue> Failure(Error error) =>
+    public new static ResultT<TValue> Failure(Error error) =>
         new(error);
 }
