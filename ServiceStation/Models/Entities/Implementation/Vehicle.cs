@@ -4,19 +4,19 @@ namespace ServiceStation.Models.Entities.Implementation;
 
 public class Vehicle : AbstractEntity
 {
-    public string OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
     
     //TODO разобраться нужны ли оба свойства ниже
-    public string BrandOfVehicleId { get; set; }
+    public Guid ModelId { get; set; }
     
-    public DateOnly YearOfRelease { get; set; }
+    public string YearOfRelease { get; set; }
     
     public string LicenseNumber { get; set; }
     
     //TODO мб поставить statusEnum
     public string Status { get; set; }
     
-    public DateTime ServiceCallDate { get; set; }
+    public string ServiceCallDate { get; set; }
     
     public virtual Owner Owner { get; set; }
     
@@ -24,5 +24,5 @@ public class Vehicle : AbstractEntity
     
     public virtual ICollection<Defect> CollectionsOfDefects { get; set; }
     
-    public virtual BrandOfVehicle BrandOfVehicle { get; set; }
+    public virtual ModelOfVehicle ModelOfVehicle { get; set; }
 }

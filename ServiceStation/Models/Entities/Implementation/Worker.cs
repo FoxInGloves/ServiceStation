@@ -4,9 +4,9 @@ namespace ServiceStation.Models.Entities.Implementation;
 
 public class Worker : AbstractEntity
 {
-    public string VehicleId { get; set; }
+    public Guid VehicleId { get; set; }
     
-    public string DefectId { get; set; }
+    public Guid DefectId { get; set; }
     
     public string FirstName { get; set; }
     

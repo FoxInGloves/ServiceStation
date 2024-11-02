@@ -4,7 +4,7 @@ namespace ServiceStation.Models.Entities.Implementation;
 
 public class Defect : AbstractEntity
 {
-    public string VehicleId { get; set; }
+    public Guid VehicleId { get; set; }
     
     public string Fault { get; set; }
     
