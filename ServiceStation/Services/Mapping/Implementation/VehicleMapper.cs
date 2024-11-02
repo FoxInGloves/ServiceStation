@@ -11,7 +11,7 @@ public class VehicleMapper : IMapper<Vehicle, VehicleDto>
         return new VehicleDto
         {
             Id = source.Id,
-            BrandAndModel = source.BrandOfVehicle.Brand + " " + source.BrandOfVehicle.Model,
+            BrandAndModel = source.ModelOfVehicle.Brand.Name + " " + source.ModelOfVehicle.Name,
             LicenseNumber = source.LicenseNumber,
             Status = source.Status,
             YearOfRelease = source.YearOfRelease
