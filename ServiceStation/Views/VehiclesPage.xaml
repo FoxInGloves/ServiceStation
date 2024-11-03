@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:ServiceStation.Views"
+      xmlns:userControls="clr-namespace:ServiceStation.Views.UserControls"
       mc:Ignorable="d"
       Title="VehiclesPage" Height="450" Width="800">
     <Page.Resources>
@@ -11,11 +11,60 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
+        
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="5"></Setter>
+        </Style>
+        
     </Page.Resources>
     
     <Grid>
-        <ScrollViewer>
-            
-        </ScrollViewer>
+        <ListView ItemsSource="{Binding CollectionOfVehicles}">
+            <ListView.View>
+                <GridView>
+                    
+                    <!--TODO сменить названия столбцов-->
+                    <GridViewColumn Header="Транспортное средство"
+                                    DisplayMemberBinding="{Binding BrandAndModel}"/>
+                    
+                    <GridViewColumn Header="Статус">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <userControls:ColorfulText Background="{Binding StatusColor}"
+                                                           Text="{Binding Status}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Header="Проблемы"/>
+                    
+                    <GridViewColumn Header="Вляделец">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <userControls:ColorfulText Background="{Binding}"
+                                                           Text="{Binding OwnerName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <!--TODO дописать bindings-->
+                    <GridViewColumn Header="Работники">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <userControls:ColorfulText Background="{Binding}"
+                                                           Text="{Binding}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Header="Дата регистрации у нас"
+                                    DisplayMemberBinding="{Binding ServiceCallDate}"/>
+                    
+                    <GridViewColumn Header="Дней у нас (мб не надо)"/>
+                    
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
