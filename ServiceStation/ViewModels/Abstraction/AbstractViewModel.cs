@@ -19,4 +19,8 @@ public class AbstractViewModel : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
+    public virtual async Task UpdateAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
