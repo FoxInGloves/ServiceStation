@@ -7,7 +7,7 @@ public class Vehicle : AbstractEntity
     public Guid OwnerId { get; set; }
     
     //TODO разобраться нужны ли оба свойства ниже
-    public Guid ModelId { get; set; }
+    public Guid ModelOfVehicleId { get; set; }
     
     public string YearOfRelease { get; set; }
     
