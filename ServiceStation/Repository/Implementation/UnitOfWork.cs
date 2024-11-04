@@ -3,7 +3,7 @@ using ServiceStation.Repository.Abstraction;
 
 namespace ServiceStation.Repository.Implementation;
 
-public class UnitOfWork(DataBaseContext context) : IUnitOfWork
+public class UnitOfWork(ApplicationDatabaseContext context) : IUnitOfWork
 {
     private IGenericRepository<BrandOfVehicle>? _brandsOfVehicleRepository;
     private IGenericRepository<Defect>? _defectsRepository;

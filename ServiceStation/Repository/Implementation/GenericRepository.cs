@@ -5,7 +5,7 @@ using ServiceStation.Repository.Abstraction;
 
 namespace ServiceStation.Repository.Implementation;
 
-public class GenericRepository<TEntity>(DataBaseContext context) : IGenericRepository<TEntity> 
+public class GenericRepository<TEntity>(ApplicationDatabaseContext context) : IGenericRepository<TEntity> 
     where TEntity : AbstractEntity
 {
     private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();

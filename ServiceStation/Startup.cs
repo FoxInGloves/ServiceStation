@@ -4,9 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
+using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Repository;
 using ServiceStation.Repository.Abstraction;
 using ServiceStation.Repository.Implementation;
+using ServiceStation.Services.Mapping.Abstraction;
+using ServiceStation.Services.Mapping.Implementation;
 using ServiceStation.Services.Navigation.Abstraction;
 using ServiceStation.Services.Navigation.Implementation;
 using ServiceStation.ViewModels.Implementation;
@@ -27,33 +31,29 @@ public static class Startup
             .CreateLogger();
 
         //TODO Добавить переменную окружения
-        const string connectingString = "Host=localhost;Port=5432;Database=Temp;Username=postgres;Password=123456789";
+        const string connectingString = "Host=localhost;Port=5432;Database=service_station;Username=postgres;Password=123456789";
         
         var host = Host.CreateDefaultBuilder()
             .UseSerilog()
             .ConfigureServices(services =>
             {
-                services.AddSingleton<App>();
+                services.AddScoped<App>();
 
-                services.AddSingleton<MainViewModel>();
-                services.AddSingleton<VehiclesViewModel>();
+                services.AddScoped<MainViewModel>();
+                services.AddScoped<VehiclesViewModel>();
 
-                services.AddDbContext<DataBaseContext>(options => 
-                    options.UseNpgsql(connectingString));
+                services.AddDbContext<ApplicationDatabaseContext>(options => 
+                    options.UseLazyLoadingProxies().UseNpgsql(connectingString));
+                
                 services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<INavigationService, NavigationService>();
+                services.AddScoped<IMapper<Vehicle, VehicleDto>, VehicleMapper>();
             })
             .Build();
 
         try
         {
             var app = host.Services.GetService<App>();
-
-            var strings = new ResourceDictionary
-            {
-                Source = new Uri("/Resources/Strings.xaml", UriKind.Relative)
-            };
-            app?.Resources.MergedDictionaries.Add(strings);
 
             app?.Run();
         }
