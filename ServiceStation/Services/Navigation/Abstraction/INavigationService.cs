@@ -7,7 +7,7 @@ namespace ServiceStation.Services.Navigation.Abstraction;
 
 public interface INavigationService
 {
-    ResultT<(Page, AbstractViewModel)> NavigateToPage(AbstractViewModel viewModel);
+    ResultT<(Page, AbstractViewModel)> NavigateToPage<TViewModel>() where TViewModel : AbstractViewModel;
 
-    ResultT<(Window, AbstractViewModel)> NavigateToWindow(AbstractViewModel viewModel);
+    ResultT<(Window, AbstractViewModel)> NavigateToWindow<TViewModel>() where TViewModel : AbstractViewModel;
 }
