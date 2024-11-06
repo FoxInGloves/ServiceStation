@@ -15,6 +15,7 @@
 
         <Style TargetType="Frame">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Margin" Value="10" />
             <Setter Property="NavigationUIVisibility" Value="Hidden" />
         </Style>
@@ -34,14 +35,14 @@
                     Command="{Binding ToggleNavigationPanelCommand}"
                     Background="Blue" />
 
-            <Button Command="{Binding A}"
-                    Content="{DynamicResource MainNavigationPanelVehicles}"
+            <Button Command="{Binding NavigateToPageCommandAsync}"
+                    Content=""
                     Background="BlueViolet"
                     Style="{StaticResource PageNavigationButton}" />
             <Button Style="{StaticResource PageNavigationButton}" />
             
         </StackPanel>
-
+        
         <Frame Grid.Column="1"
                Content="{Binding CurrentPage}">
 
