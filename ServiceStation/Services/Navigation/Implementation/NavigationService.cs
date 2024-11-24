@@ -20,7 +20,7 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
         {
             var viewModel = serviceProvider.GetService<TViewModel>();
             
-            var pageType = GetPageType<Page>(typeof(TViewModel));
+            var pageType = GetViewType<Page>(typeof(TViewModel));
 
             if (pageType is null)
                 return Error.NotFound("ViewTypeNotFound", $"View type for '{typeof(TViewModel)}' not found.");
@@ -42,8 +42,10 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
         try
         {
             var viewModel = serviceProvider.GetService<TViewModel>();
+            if (viewModel is null)
+                throw new NullReferenceException("ViewModel is null");
 
-            var windowType = GetPageType<Window>(typeof(TViewModel));
+            var windowType = GetViewType<Window>(typeof(TViewModel));
 
             if (windowType is null)
                 return Error.NotFound("ViewTypeNotFound", $"View type for '{typeof(TViewModel)}' not found.");
@@ -60,7 +62,8 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
         }
     }
 
-    private Type? GetPageType<TView>(Type viewModelType) where TView : class
+    //TODO рефакторинг названия
+    private Type? GetViewType<TView>(Type viewModelType) where TView : class
     {
         var importViewType = typeof(TView);
         string? viewName;
@@ -74,7 +77,7 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
         else if (importViewType == typeof(Window))
         {
             viewName = viewModelType.FullName?
-                .Replace("ViewModels.Implementation.AdditionalViewModels", "Views.AdditionalViews")
+                .Replace("ViewModels.Implementation", "Views")
                 .Replace("ViewModel", "Window");
         }
         else

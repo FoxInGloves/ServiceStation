@@ -8,5 +8,5 @@ public class ModelOfVehicle : AbstractEntity
     
     public string Name { get; set; }
     
-    public virtual BrandOfVehicle Brand { get; set; }
+    public virtual BrandOfVehicle? Brand { get; set; }
 }

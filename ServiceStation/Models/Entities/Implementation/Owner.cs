@@ -8,7 +8,7 @@ public class Owner : AbstractEntity
     
     public string LastName { get; set; }
     
-    public string MiddleName { get; set; }
+    public string? MiddleName { get; set; }
     
     public string City { get; set; }
     

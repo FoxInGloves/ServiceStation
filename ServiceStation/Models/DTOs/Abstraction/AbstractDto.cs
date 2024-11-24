@@ -2,5 +2,4 @@
 
 public abstract class AbstractDto
 {
-    public Guid Id { get; set; }
 }

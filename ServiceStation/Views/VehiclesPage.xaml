@@ -3,66 +3,185 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:userControls="clr-namespace:ServiceStation.Views.UserControls"
+      xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
       mc:Ignorable="d"
-      Title="VehiclesPage" Height="450" Width="800">
+      Name="VehiclesPageName"
+      Title="Vehicles page"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch">
     <Page.Resources>
-        <Style TargetType="ScrollViewer">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <xamlConverters:StringToBrushConverter x:Key="StringToBrushConverter" />
+        <Style TargetType="ListView">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Margin" Value="0,15,0,0" />
+            <Style.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </Style.Resources>
         </Style>
-        
+
         <Style TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="MinWidth" Value="20" />
+            <Setter Property="Width" Value="Auto" />
         </Style>
-        
+
+        <Style TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Style.Resources>
+        </Style>
     </Page.Resources>
-    
+
     <Grid>
-        <ListView ItemsSource="{Binding CollectionOfVehicles}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Транспортные средства" FontSize="32" Margin="5,20,0,0" />
+
+        <Button Grid.Row="0" Height="45" Width="70"
+                HorizontalAlignment="Right"
+                Content="Добавить"
+                Command="{Binding AddNewVehicleAsyncCommand }"
+                Margin="0,20,20,0" />
+        
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding CollectionOfVehicles}"
+                  SelectedItem="{Binding SelectedVehicle}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding NavigateToVehicleDetailsCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <ListView.View>
                 <GridView>
-                    
-                    <!--TODO сменить названия столбцов-->
-                    <GridViewColumn Header="Транспортное средство"
-                                    DisplayMemberBinding="{Binding BrandAndModel}"/>
-                    
-                    <GridViewColumn Header="Статус">
+                    <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <userControls:ColorfulText Background="{Binding StatusColor}"
-                                                           Text="{Binding Status}"/>
+                                <Menu
+                                    Background="Transparent"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch">
+                                    <MenuItem HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Resources/Images/menu-button.png" />
+                                        </MenuItem.Icon>
+                                        <MenuItem Header="Удалить"
+                                                  Command="{Binding DataContext.DeleteVehicleCommandAsync,
+                                                  Source={x:Reference VehiclesPageName}}"
+                                                  CommandParameter="{Binding Id}">
+                                            <MenuItem.Icon>
+                                                <Image Source="/Resources/Images/delete.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </MenuItem>
+                                </Menu>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
-                    <GridViewColumn Header="Проблемы"/>
-                    
-                    <GridViewColumn Header="Вляделец">
+
+                    <!--TODO сменить названия столбцов-->
+                    <GridViewColumn Header="Транспортное средство"
+                                    DisplayMemberBinding="{Binding BrandAndModel}" />
+
+                    <GridViewColumn Header="Статус" Width="90">
                         <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <userControls:ColorfulText
+                                    BackgroundColor="{Binding Status.Color, 
+                                Converter={StaticResource StringToBrushConverter}}"
+                                    Text="{Binding Status.Name}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!--<GridViewColumn Header="Проблемы">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding CollectionOfDefects}">
+                                    ~1~<ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+
+                                            <WrapPanel Orientation="Horizontal"
+                                                       MaxWidth="{Binding ActualWidth, Mode=OneWay, 
+                       RelativeSource={RelativeSource FindAncestor, 
+                       AncestorType={x:Type GridViewColumnHeader}}}"/>
+                                            
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>@1@
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            ~1~<StackPanel Orientation="Vertical">@1@
+                                                <userControls:ColorfulText Background="{Binding BackgroundColor}"
+                                                                           Text="{Binding Fault}"/>
+                                            ~1~</StackPanel>@1@
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+
+                    <GridViewColumn Header="Владелец"
+                                    DisplayMemberBinding="{Binding OwnerName}">
+                        <!--<GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <userControls:ColorfulText Background="{Binding}"
                                                            Text="{Binding OwnerName}"/>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
+                        </GridViewColumn.CellTemplate>-->
                     </GridViewColumn>
-                    
+
                     <!--TODO дописать bindings-->
-                    <GridViewColumn Header="Работники">
+                    <GridViewColumn Header="Исполнители">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <userControls:ColorfulText Background="{Binding}"
-                                                           Text="{Binding}"/>
+                                <ItemsControl ItemsSource="{Binding CollectionOfWorkers}">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+
+                                            <WrapPanel Orientation="Horizontal" />
+
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Vertical">
+                                                <userControls:ColorfulText Background="{Binding }"
+                                                                           Text="{Binding FullName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
                             </DataTemplate>
+
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
                     <GridViewColumn Header="Дата регистрации у нас"
-                                    DisplayMemberBinding="{Binding ServiceCallDate}"/>
-                    
-                    <GridViewColumn Header="Дней у нас (мб не надо)"/>
-                    
+                                    DisplayMemberBinding="{Binding ServiceCallDate}" />
+
+                    <GridViewColumn Header="Дней у нас (мб не надо)"
+                                    DisplayMemberBinding="{Binding ElapsedTime}" />
+
                 </GridView>
             </ListView.View>
         </ListView>

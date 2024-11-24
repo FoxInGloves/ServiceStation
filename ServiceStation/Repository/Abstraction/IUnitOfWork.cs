@@ -15,4 +15,8 @@ public interface IUnitOfWork
     IGenericRepository<Vehicle> VehicleRepository { get; }
     
     IGenericRepository<Worker> WorkersRepository { get; }
+    
+    IGenericRepository<Status> StatusRepository { get; }
+    
+    Task SaveChangesAsync();
 }

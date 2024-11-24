@@ -6,9 +6,9 @@ public class Worker : AbstractEntity
 {
     public Guid VehicleId { get; set; }
     
-    public Guid DefectId { get; set; }
+    //public Guid DefectId { get; set; }
     
-    public string FirstName { get; set; }
+    public required string FirstName { get; set; }
     
     public string LastName { get; set; }
     

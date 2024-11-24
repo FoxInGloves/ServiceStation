@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -41,13 +40,27 @@ public static class Startup
 
                 services.AddScoped<MainViewModel>();
                 services.AddScoped<VehiclesViewModel>();
+                services.AddScoped<WorkersViewModel>();
+                services.AddScoped<FeedbackViewModel>();
+                services.AddScoped<InfoViewModel>();
+                services.AddScoped<SettingsViewModel>();
+                services.AddScoped<AddNewWorkerViewModel>();
+                services.AddScoped<AddNewVehicleViewModel>();
+                services.AddScoped<VehicleDetailsViewModel>();
+                services.AddScoped<OwnerDetailsViewModel>();
+                services.AddScoped<DefectDetailsViewModel>();
+                services.AddScoped<WorkerDetailsViewModel>();
 
                 services.AddDbContext<ApplicationDatabaseContext>(options => 
                     options.UseLazyLoadingProxies().UseNpgsql(connectingString));
                 
                 services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<INavigationService, NavigationService>();
+                
                 services.AddScoped<IMapper<Vehicle, VehicleDto>, VehicleMapper>();
+                services.AddScoped<IMapper<Worker, WorkerDto>, WorkerMapper>();
+                services.AddScoped<IMapper<Owner, OwnerDto>, OwnerMapper>();
+                services.AddScoped<IMapper<Defect, DefectDto>, DefectMapper>();
             })
             .Build();
 

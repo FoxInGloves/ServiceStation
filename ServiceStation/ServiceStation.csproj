@@ -11,9 +11,11 @@
 
     <ItemGroup>
       <Folder Include="Models\Entities\" />
+      <Folder Include="ViewModels\Other\" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +26,7 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
       <PackageReference Include="Serilog" Version="4.1.0" />
       <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
@@ -38,6 +41,38 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\Images\delete.png" />
+      <Resource Include="Resources\Images\delete.png" />
+      <None Remove="Resources\Images\settings.png" />
+      <Resource Include="Resources\Images\settings.png" />
+      <None Remove="Resources\Images\cars.png" />
+      <None Remove="Resources\Images\worker.png" />
+      <None Remove="Resources\Images\help.png" />
+      <Resource Include="Resources\Images\help.png" />
+      <None Remove="Resources\Images\menu.png" />
+      <Resource Include="Resources\Images\menu.png" />
+      <None Remove="Resources\Images\user.png" />
+      <Resource Include="Resources\Images\user.png" />
+      <None Remove="Resources\Images\car-solid.png" />
+      <None Remove="Resources\Images\car-wash.png" />
+      <None Remove="Resources\Images\hard-car.png" />
+      <None Remove="Resources\Images\hard-hat.png" />
+      <None Remove="Resources\Images\menu-button.png" />
+      <Resource Include="Resources\Images\menu-button.png" />
+      <None Remove="Resources\Images\bar.png" />
+      <None Remove="Resources\Images\car.png" />
+      <Resource Include="Resources\Images\car.png" />
+      <None Remove="Resources\Images\engineer.png" />
+      <Resource Include="Resources\Images\engineer.png" />
+      <None Remove="Resources\Images\mail.png" />
+      <Resource Include="Resources\Images\mail.png" />
+      <None Remove="Resources\Images\check.png" />
+      <Resource Include="Resources\Images\check.png" />
+      <None Remove="Resources\Images\edit.png" />
+      <Resource Include="Resources\Images\edit.png" />
     </ItemGroup>
 
 </Project>

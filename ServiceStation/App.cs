@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Serilog;
 using ServiceStation.ViewModels.Implementation;
 
 namespace ServiceStation;
@@ -7,8 +8,6 @@ public class App(MainViewModel viewModel) : Application
 {
     protected override void OnStartup(StartupEventArgs e)
     {
-        ConfigureResourceDictionaries();
-        
         var mainWindow = new MainWindow
         {
             DataContext = viewModel
@@ -32,5 +31,11 @@ public class App(MainViewModel viewModel) : Application
             Source = new Uri("/Resources/WindowNavigationButtons.xaml", UriKind.Relative)
         };
         Current.Resources.MergedDictionaries.Add(windowNavigationButtonsDictionary);*/
+    }
+
+    //TODO нужно ли закрывать логгер
+    protected override void OnExit(ExitEventArgs e)
+    {
+        Log.CloseAndFlush();
     }
 }
