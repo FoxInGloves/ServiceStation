@@ -3,10 +3,127 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:ServiceStation.Views"
         mc:Ignorable="d"
-        Title="DefectDetailsWindow" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="DefectDetailsWindow" Height="450" Width="400">
+    <Window.Resources>
+        <Style x:Key="MainContainer" TargetType="StackPanel">
+            <Setter Property="Margin" Value="30" />
+        </Style>
+
+        <Style x:Key="FieldContainer" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+            <Setter Property="Margin" Value="0,0,0,5"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5,0,0,5" />
+                    <Setter Property="BorderThickness" Value="1,1,0,1"></Setter>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="DescriptionStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="200" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="IsDefectButton" TargetType="Button">
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Width" Value="70" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="0,5,5,0" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="ChangeInputButton" TargetType="Button">
+            <Setter Property="Height" Value="17" />
+            <Setter Property="Width" Value="20" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10,0,0,3" />
+            <Setter Property="Background" Value="Transparent" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="ControlButton" TargetType="Button">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Margin" Value="30,0,30,30" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="13" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <StackPanel></StackPanel>
+        <StackPanel Style="{StaticResource MainContainer}">
+            <StackPanel Style="{StaticResource FieldContainer}">
+                <TextBlock Text="Неисправность:" />
+
+                <Button Style="{StaticResource ChangeInputButton}" >
+                    <Image Source="{Binding FaultButtonIconPath, UpdateSourceTrigger=PropertyChanged}"/>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource FieldContainer}">
+                <TextBox Text="{Binding Fault}"
+                         IsEnabled="{Binding IsFaultInputEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button Style="{StaticResource IsDefectButton}"
+                        Background="{Binding IsFixedColor}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image />
+                        <TextBlock />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0">
+                <StackPanel Style="{StaticResource FieldContainer}">
+                    <TextBlock Text="Описание:" />
+                    
+                    <Button Style="{StaticResource ChangeInputButton}">
+                        <Image Source="{Binding DescriptionButtonIconPath, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Button>
+                </StackPanel>
+                
+                <TextBox Style="{StaticResource DescriptionStyle}" 
+                         Text="{Binding Description}"
+                         IsEnabled="{Binding IsDescriptionInputEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </StackPanel>
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Bottom">
+            <Button Style="{StaticResource ControlButton}"
+                    HorizontalAlignment="Left" />
+            <Button Style="{StaticResource ControlButton}"
+                    HorizontalAlignment="Right" />
+        </Grid>
     </Grid>
 </Window>
