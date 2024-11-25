@@ -12,32 +12,36 @@
       Title="Workers">
     <Page.Resources>
         <Style TargetType="ScrollViewer">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
         </Style>
         <Style TargetType="Button">
             <Style.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="10"/>
-                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="CornerRadius" Value="10" />
+                    <Setter Property="BorderThickness" Value="0" />
                 </Style>
             </Style.Resources>
         </Style>
-        
+
         <Style TargetType="ItemsControl">
-            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Margin" Value="0,15,0,0" />
+        </Style>
+
+        <Style x:Key="Worker" TargetType="userControls:WorkersPreview">
+            <Setter Property="Margin" Value="0,0,10,10"></Setter>
         </Style>
     </Page.Resources>
-    
+
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition/>
+                <RowDefinition Height="70" />
+                <RowDefinition />
             </Grid.RowDefinitions>
-                
+
             <TextBlock Grid.Row="0"
                        Text="Работники" FontSize="32" Margin="5,20,0,0" />
 
@@ -45,55 +49,57 @@
                     HorizontalAlignment="Right"
                     Content="Добавить"
                     Command="{Binding AddNewWorkerAsyncCommand }"
-                    Margin="0,20,20,0"/>
-            
-                <ItemsControl Grid.Row="1"
-                              ItemsSource="{Binding CollectionOfWorkers}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
+                    Margin="0,20,20,0" />
 
-                            <WrapPanel Orientation="Horizontal"
-                                       MaxWidth="{Binding ActualWidth, Mode=OneWay, 
+            <ItemsControl Grid.Row="1"
+                          ItemsSource="{Binding CollectionOfWorkers}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+
+                        <WrapPanel Orientation="Horizontal"
+                                   MaxWidth="{Binding ActualWidth, Mode=OneWay, 
                        RelativeSource={RelativeSource FindAncestor, 
-                       AncestorType={x:Type Page}}}"/>
+                       AncestorType={x:Type Page}}}" />
 
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            
-                            <userControls:WorkersPreview WorkerName="{Binding FullName}">
-                                <userControls:WorkersPreview.ContextMenu>
-                                    <ContextMenu>
-                                        <!--TODO посмотреть source-->
-                                        <MenuItem Header="Удалить"
-                                                  Command="{Binding DataContext.AddNewWorkerAsyncCommand,
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <userControls:WorkersPreview Style="{StaticResource Worker}"
+                                                     WorkerName="{Binding FullName}">
+                            <userControls:WorkersPreview.ContextMenu>
+                                <ContextMenu>
+                                    <!--TODO посмотреть source-->
+                                    <MenuItem Header="Удалить"
+                                              Command="{Binding DataContext.DeleteWorkerAsyncCommand,
                                                   Source={x:Reference WorkersPageName}}"
-                                                  CommandParameter="{Binding Id}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/Resources/Images/delete.png"
-                                                       Height="auto"
-                                                       Width="auto"
-                                                       Margin="-2"/>
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                    </ContextMenu>
-                                </userControls:WorkersPreview.ContextMenu>
-                                
-                                <b:Interaction.Triggers>
-                                    <b:EventTrigger EventName="MouseDoubleClick">
-                                        <b:InvokeCommandAction Command="{Binding DataContext.NavigateToWorkerDetailsCommand,
+                                              CommandParameter="{Binding Id}">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Resources/Images/delete.png"
+                                                   Height="auto"
+                                                   Width="auto"
+                                                   Margin="-2" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </userControls:WorkersPreview.ContextMenu>
+
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="MouseDoubleClick">
+                                    <b:InvokeCommandAction
+                                        Command="{Binding DataContext.NavigateToWorkerDetailsCommand,
                                         RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
-                                                               CommandParameter="{Binding Id}"/>
-                                    </b:EventTrigger>
-                                </b:Interaction.Triggers>
-                            </userControls:WorkersPreview>
-                            
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
-            </Grid>
+                                        CommandParameter="{Binding Id}" />
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </userControls:WorkersPreview>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </Grid>
     </ScrollViewer>
 </Page>

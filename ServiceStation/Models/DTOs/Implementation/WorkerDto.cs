@@ -6,7 +6,7 @@ public class WorkerDto : AbstractDto
 {
     public Guid Id { get; set; }
     
-    public Guid VehicleId { get; set; }
+    //public Guid VehicleId { get; set; }
     
     public Guid DefectId { get; set; }
     

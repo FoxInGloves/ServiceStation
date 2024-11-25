@@ -70,8 +70,9 @@ public class AddNewWorkerViewModel : AbstractViewModel
         if (string.IsNullOrWhiteSpace(LastName) && string.IsNullOrWhiteSpace(FirstName))
         {
             MessageBox.Show("Одно из полей незаполнено");
+            return;
         }
-
+        
         parameters.WindowToClose.DialogResult = true;
     }
 }
