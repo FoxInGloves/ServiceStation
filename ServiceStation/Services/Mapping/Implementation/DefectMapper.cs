@@ -17,8 +17,8 @@ public class DefectMapper : IMapper<Defect, DefectDto>
             Description = source.Description,
             IsFixed = source.IsFixed,
             BackgroundColor = source.IsFixed ? "#02b83e" : "#f52020",
-            StartDate = source.StartDate,
-            EndDate = source.EndDate
+            /*StartDate = source.StartDate,
+            EndDate = source.EndDate*/
         };
         
         return defectDto;

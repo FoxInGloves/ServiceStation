@@ -18,7 +18,7 @@ public class DefectDto : AbstractDto
     
     public string BackgroundColor { get; set; }
     
-    public string StartDate { get; set; }
+    /*public DateTime StartDate { get; set; }
     
-    public string? EndDate { get; set; } //TODO переименовать
+    public DateTime EndDate { get; set; } //TODO переименовать*/
 }
