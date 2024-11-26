@@ -97,7 +97,7 @@ public sealed class ApplicationDatabaseContext : DbContext
                 YearOfRelease = "2022",
                 RegistrationNumber = "1",
                 StatusId = new Guid("5EC8A0CC-0BE2-4567-99B5-1FD6C1EE56F9"), //В работе
-                ServiceCallDate = DateOnly.FromDateTime(DateTime.Now).ToString()
+                ServiceCallDate = DateOnly.FromDateTime(DateTime.Today).ToString()
             });
         modelBuilder.Entity<Defect>().HasData(
             new Defect
@@ -114,7 +114,7 @@ public sealed class ApplicationDatabaseContext : DbContext
             new Worker
             {
                 Id = new Guid("D5C60564-6241-49BC-9C26-A7105FF1B4A9"), //New id
-                VehicleId = new Guid("5316A5E7-FD12-4739-989B-18A8E75FE5EA"), //Vesta
+                //VehicleId = new Guid("5316A5E7-FD12-4739-989B-18A8E75FE5EA"), //Vesta
                 //DefectId = new Guid("454DE61E-627D-46ED-851B-9A97BBFA571F"), //Defect engine
                 FirstName = "Morgan",
                 LastName = "Freeman",

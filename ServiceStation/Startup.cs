@@ -46,6 +46,7 @@ public static class Startup
                 services.AddScoped<SettingsViewModel>();
                 services.AddScoped<AddNewWorkerViewModel>();
                 services.AddScoped<AddNewVehicleViewModel>();
+                services.AddScoped<AddNewDefectViewModel>();
                 services.AddScoped<VehicleDetailsViewModel>();
                 services.AddScoped<OwnerDetailsViewModel>();
                 services.AddScoped<DefectDetailsViewModel>();
@@ -72,7 +73,7 @@ public static class Startup
         }
         catch (Exception ex)
         {
-            Log.Fatal(ex, "The application failed to start");
+            Log.Fatal(ex, "The application dropped due to unexpected exception.");
         }
     }
 }
