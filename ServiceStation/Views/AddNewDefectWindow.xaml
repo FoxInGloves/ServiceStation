@@ -1,0 +1,114 @@
+﻿<Window x:Class="ServiceStation.Views.AddNewDefectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
+        mc:Ignorable="d"
+        Title="AddNewDefectWindow" Height="450" Width="400">
+    <Window.Resources>
+        <xamlConverters:TupleConverter x:Key="TupleConverter" />
+
+        <Style x:Key="MainContainer" TargetType="StackPanel">
+            <Setter Property="Margin" Value="30" />
+        </Style>
+
+        <Style x:Key="FieldContainer" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+            <Setter Property="Margin" Value="0,0,0,5"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5,5,5,5" />
+                    <Setter Property="BorderThickness" Value="1,1,0,1"></Setter>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="DescriptionStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="200" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="ControlButton" TargetType="Button">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Margin" Value="30,0,30,30" />
+            <Setter Property="FontSize" Value="16" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="13" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel Style="{StaticResource MainContainer}">
+            <TextBlock Text="Неисправность:" />
+
+            <StackPanel Style="{StaticResource FieldContainer}">
+                <TextBox Text="{Binding Fault}" />
+ 
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0">
+                <TextBlock Text="Описание:" />
+
+                <TextBox Style="{StaticResource DescriptionStyle}"
+                         Text="{Binding Description}" />
+            </StackPanel>
+        </StackPanel>
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Bottom">
+            <Button Style="{StaticResource ControlButton}"
+                    HorizontalAlignment="Left"
+                    Background="Red"
+                    Content="Отмена">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource TupleConverter}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                        <Binding>
+                            <Binding.Source>
+                                <system:Boolean>False</system:Boolean>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Style="{StaticResource ControlButton}"
+                    HorizontalAlignment="Right"
+                    Background="LawnGreen"
+                    Content="Ок">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource TupleConverter}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                        <Binding>
+                            <Binding.Source>
+                                <system:Boolean>true</system:Boolean>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
