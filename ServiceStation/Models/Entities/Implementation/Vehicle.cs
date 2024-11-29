@@ -10,11 +10,11 @@ public class Vehicle : AbstractEntity
     
     public Guid ModelOfVehicleId { get; set; }
 
-    public string YearOfRelease { get; set; }
+    public int YearOfRelease { get; set; }
 
     public string RegistrationNumber { get; set; }
     
-    public string ServiceCallDate { get; set; }
+    public DateOnly ServiceCallDate { get; set; }
 
     public virtual Owner? Owner { get; set; }
     

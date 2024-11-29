@@ -7,9 +7,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <NeutralLanguage>ru</NeutralLanguage>
+        <LangVersion>default</LangVersion>
+        <ApplicationIcon>Resources\ApplicationIcons\application-icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="DataTransferObjects\Abstraction\" />
       <Folder Include="Models\Entities\" />
     </ItemGroup>
 

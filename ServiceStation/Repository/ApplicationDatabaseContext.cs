@@ -94,10 +94,10 @@ public sealed class ApplicationDatabaseContext : DbContext
                 Id = new Guid("5316A5E7-FD12-4739-989B-18A8E75FE5EA"), //New id
                 OwnerId = new Guid("31EB1A61-48C4-4091-92C7-890044910EB9"), //Ryan Gosling
                 ModelOfVehicleId = new Guid("53DC0E0B-6D8A-439C-8B28-DCFEC210B55A"), //Vesta
-                YearOfRelease = "2022",
+                YearOfRelease = 2022,
                 RegistrationNumber = "1",
                 StatusId = new Guid("5EC8A0CC-0BE2-4567-99B5-1FD6C1EE56F9"), //В работе
-                ServiceCallDate = DateOnly.FromDateTime(DateTime.Today).ToString()
+                ServiceCallDate = DateOnly.FromDateTime(DateTime.Today)
             });
         modelBuilder.Entity<Defect>().HasData(
             new Defect

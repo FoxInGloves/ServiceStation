@@ -44,16 +44,18 @@ public static class Startup
                 services.AddScoped<FeedbackViewModel>();
                 services.AddScoped<InfoViewModel>();
                 services.AddScoped<SettingsViewModel>();
-                services.AddScoped<AddNewWorkerViewModel>();
-                services.AddScoped<AddNewVehicleViewModel>();
-                services.AddScoped<AddNewDefectViewModel>();
+                
+                services.AddTransient<AddNewWorkerViewModel>();
+                services.AddTransient<AddNewVehicleViewModel>();
+                services.AddTransient<AddNewDefectViewModel>();
+                
                 services.AddScoped<VehicleDetailsViewModel>();
                 services.AddScoped<OwnerDetailsViewModel>();
-                services.AddScoped<DefectDetailsViewModel>();
+                services.AddTransient<DefectDetailsViewModel>();
                 services.AddScoped<WorkerDetailsViewModel>();
 
                 services.AddDbContext<ApplicationDatabaseContext>(options => 
-                    options.UseLazyLoadingProxies().UseNpgsql(connectingString));
+                    options.UseLazyLoadingProxies().EnableDetailedErrors().UseNpgsql(connectingString));
                 
                 services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<INavigationService, NavigationService>();
