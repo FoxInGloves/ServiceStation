@@ -30,7 +30,8 @@ public static class Startup
             .CreateLogger();
 
         //TODO Добавить переменную окружения
-        const string connectingString = "Host=localhost;Port=5432;Database=service_station;Username=postgres;Password=123456789";
+        const string connectingString =
+            "Host=localhost;Port=5432;Database=service_station;Username=postgres;Password=123456789";
         
         var host = Host.CreateDefaultBuilder()
             .UseSerilog()
