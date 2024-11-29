@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ServiceStation.Models.Entities.Implementation;
 using static System.String;
 
@@ -31,7 +30,11 @@ public sealed class ApplicationDatabaseContext : DbContext
         modelBuilder.Entity<ModelOfVehicle>().HasKey(o => o.Id);
         modelBuilder.Entity<Owner>().HasKey(o => o.Id);
         modelBuilder.Entity<Status>().HasKey(o => o.Id);
+        
         modelBuilder.Entity<Vehicle>().HasKey(o => o.Id);
+        modelBuilder.Entity<Vehicle>().HasOne(o => o.Owner).WithOne().OnDelete(DeleteBehavior.ClientCascade);
+        modelBuilder.Entity<Vehicle>().HasMany(o => o.CollectionsOfDefects).WithOne().OnDelete(DeleteBehavior.ClientCascade);
+        
         modelBuilder.Entity<Worker>().HasKey(o => o.Id);
 
         modelBuilder.Entity<BrandOfVehicle>().HasData(
@@ -107,8 +110,9 @@ public sealed class ApplicationDatabaseContext : DbContext
                 Fault = "Engine",
                 Description = "none",
                 IsFixed = false,
-                StartDate = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                EndDate = null
+                //TODO даты убрал
+                /*StartDate = DateTime.Now,
+                EndDate = DateTime.MinValue*/
             });
         modelBuilder.Entity<Worker>().HasData(
             new Worker
