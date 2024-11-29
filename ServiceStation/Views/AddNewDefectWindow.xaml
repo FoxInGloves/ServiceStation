@@ -6,7 +6,8 @@
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
         mc:Ignorable="d"
-        Title="AddNewDefectWindow" Height="450" Width="400">
+        ResizeMode="NoResize"
+        Title="Добавить новую неисправность" Height="450" Width="400">
     <Window.Resources>
         <xamlConverters:TupleConverter x:Key="TupleConverter" />
 
@@ -82,7 +83,8 @@
             <Button Style="{StaticResource ControlButton}"
                     HorizontalAlignment="Left"
                     Background="Red"
-                    Content="Отмена">
+                    Content="Отмена"
+                    Command="{Binding CancelCommand}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource TupleConverter}">
                         <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
@@ -97,7 +99,8 @@
             <Button Style="{StaticResource ControlButton}"
                     HorizontalAlignment="Right"
                     Background="LawnGreen"
-                    Content="Ок">
+                    Content="Ок"
+                    Command="{Binding SaveCommand}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource TupleConverter}">
                         <Binding RelativeSource="{RelativeSource AncestorType=Window}" />

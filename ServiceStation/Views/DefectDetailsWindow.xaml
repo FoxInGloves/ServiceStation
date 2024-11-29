@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        Title="DefectDetailsWindow" Height="450" Width="400">
+        Title="Подробная информация о неисправности" Height="450" Width="400">
     <Window.Resources>
+        <xamlConverters:TupleConverter x:Key="TupleConverter" />
+
         <Style x:Key="MainContainer" TargetType="StackPanel">
             <Setter Property="Margin" Value="30" />
         </Style>
@@ -48,10 +54,10 @@
         <Style x:Key="IsDefectButton" TargetType="Button">
             <Setter Property="Height" Value="25" />
             <Setter Property="Width" Value="70" />
+            <Setter Property="BorderThickness" Value="0"></Setter>
             <Style.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="0,5,5,0" />
-                    <Setter Property="BorderThickness" Value="0" />
                 </Style>
             </Style.Resources>
         </Style>
@@ -62,11 +68,7 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="10,0,0,3" />
             <Setter Property="Background" Value="Transparent" />
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="BorderThickness" Value="0" />
-                </Style>
-            </Style.Resources>
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
 
         <Style x:Key="ControlButton" TargetType="Button">
@@ -80,26 +82,42 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
+    
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Closing">
+            <b:InvokeCommandAction Command="{Binding CloseWindowCommand}">
+                <b:InvokeCommandAction.CommandParameter>
+                    <MultiBinding Converter="{StaticResource TupleConverter}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                        <Binding Path="DialogResult" />
+                    </MultiBinding>
+                </b:InvokeCommandAction.CommandParameter>
+            </b:InvokeCommandAction>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
 
     <Grid>
         <StackPanel Style="{StaticResource MainContainer}">
             <StackPanel Style="{StaticResource FieldContainer}">
                 <TextBlock Text="Неисправность:" />
 
-                <Button Style="{StaticResource ChangeInputButton}" >
-                    <Image Source="{Binding FaultButtonIconPath, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Style="{StaticResource ChangeInputButton}"
+                        Command="{Binding ChangeInputFaultCommand}">
+                    <Image Source="{Binding FaultButtonIconPath, UpdateSourceTrigger=PropertyChanged}" />
                 </Button>
             </StackPanel>
 
             <StackPanel Style="{StaticResource FieldContainer}">
                 <TextBox Text="{Binding Fault}"
-                         IsEnabled="{Binding IsFaultInputEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+                         IsEnabled="{Binding IsFaultInputEnabled, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Button Style="{StaticResource IsDefectButton}"
-                        Background="{Binding IsFixedColor}">
-                    <StackPanel Orientation="Horizontal">
+                        Background="{Binding IsFixedColor, Mode=TwoWay}"
+                        Command="{Binding ChangeIsFixedStatusCommand}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,3,0">
                         <Image />
-                        <TextBlock />
+                        <TextBlock Text="{Binding TextForIsFixedButton}"
+                                   FontWeight="Light" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -107,23 +125,53 @@
             <StackPanel Margin="0,20,0,0">
                 <StackPanel Style="{StaticResource FieldContainer}">
                     <TextBlock Text="Описание:" />
-                    
-                    <Button Style="{StaticResource ChangeInputButton}">
-                        <Image Source="{Binding DescriptionButtonIconPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Button Style="{StaticResource ChangeInputButton}"
+                            Command="{Binding ChangeInputDescriptionCommand}">
+                        <Image Source="{Binding DescriptionButtonIconPath, UpdateSourceTrigger=PropertyChanged}" />
                     </Button>
                 </StackPanel>
-                
-                <TextBox Style="{StaticResource DescriptionStyle}" 
+
+                <TextBox Style="{StaticResource DescriptionStyle}"
                          Text="{Binding Description}"
-                         IsEnabled="{Binding IsDescriptionInputEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+                         IsEnabled="{Binding IsDescriptionInputEnabled, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </StackPanel>
         <Grid HorizontalAlignment="Stretch"
               VerticalAlignment="Bottom">
             <Button Style="{StaticResource ControlButton}"
-                    HorizontalAlignment="Left" />
+                    HorizontalAlignment="Left"
+                    Content="Отмена"
+                    Command="{Binding CloseWindowCommand}"
+                    Background="Red">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource TupleConverter}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                        <Binding>
+                            <Binding.Source>
+                                <system:Boolean>false</system:Boolean>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
             <Button Style="{StaticResource ControlButton}"
-                    HorizontalAlignment="Right" />
+                    HorizontalAlignment="Right"
+                    Content="Сохранить"
+                    Command="{Binding CloseWindowCommand}"
+                    Background="LawnGreen">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource TupleConverter}">
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                        <Binding>
+                            <Binding.Source>
+                                <system:Boolean>true</system:Boolean>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
         </Grid>
     </Grid>
 </Window>
