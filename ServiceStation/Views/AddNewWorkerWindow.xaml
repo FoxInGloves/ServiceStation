@@ -6,7 +6,7 @@
         xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="AddNewWorkerWindow" Height="450" Width="500">
+        Title="Добавить нового работника" Height="450" Width="500">
     <Window.Resources>
         <xamlConverters:TupleConverter x:Key="TupleConverter" />
         <Style x:Key="Title" TargetType="TextBlock">

@@ -30,7 +30,8 @@ public static class Startup
             .CreateLogger();
 
         //TODO Добавить переменную окружения
-        const string connectingString = "Host=localhost;Port=5432;Database=service_station;Username=postgres;Password=123456789";
+        const string connectingString =
+            "Host=localhost;Port=5432;Database=service_station;Username=postgres;Password=123456789";
         
         var host = Host.CreateDefaultBuilder()
             .UseSerilog()
@@ -44,15 +45,18 @@ public static class Startup
                 services.AddScoped<FeedbackViewModel>();
                 services.AddScoped<InfoViewModel>();
                 services.AddScoped<SettingsViewModel>();
-                services.AddScoped<AddNewWorkerViewModel>();
-                services.AddScoped<AddNewVehicleViewModel>();
+                
+                services.AddTransient<AddNewWorkerViewModel>();
+                services.AddTransient<AddNewVehicleViewModel>();
+                services.AddTransient<AddNewDefectViewModel>();
+                
                 services.AddScoped<VehicleDetailsViewModel>();
                 services.AddScoped<OwnerDetailsViewModel>();
-                services.AddScoped<DefectDetailsViewModel>();
+                services.AddTransient<DefectDetailsViewModel>();
                 services.AddScoped<WorkerDetailsViewModel>();
 
                 services.AddDbContext<ApplicationDatabaseContext>(options => 
-                    options.UseLazyLoadingProxies().UseNpgsql(connectingString));
+                    options.UseLazyLoadingProxies().EnableDetailedErrors().UseNpgsql(connectingString));
                 
                 services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<INavigationService, NavigationService>();
@@ -72,7 +76,7 @@ public static class Startup
         }
         catch (Exception ex)
         {
-            Log.Fatal(ex, "The application failed to start");
+            Log.Fatal(ex, "The application dropped due to unexpected exception.");
         }
     }
 }

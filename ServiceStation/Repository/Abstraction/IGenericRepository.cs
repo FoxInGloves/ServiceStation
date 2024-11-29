@@ -13,9 +13,11 @@ public interface IGenericRepository<TEntity> where TEntity : AbstractEntity
 
     Task CreateAsync(TEntity entity);
 
-    Task DeleteAsync(object id);
+    Task DeleteByIdAsync(object id);
 
-    Task DeleteAsync(TEntity entityToDelete);
+    void Delete(TEntity entityToDelete);
+    
+    void DeleteRange(IEnumerable<TEntity> entitiesToDelete);
 
     Task UpdateAsync(TEntity entityToUpdate);
 }
