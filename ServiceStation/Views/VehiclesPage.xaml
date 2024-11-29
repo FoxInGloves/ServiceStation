@@ -8,9 +8,9 @@
       xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
       mc:Ignorable="d"
       Name="VehiclesPageName"
-      Title="Vehicles page"
       HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch">
+      VerticalAlignment="Stretch"
+      Title="Транспортные средства">
     <Page.Resources>
         <xamlConverters:StringToBrushConverter x:Key="StringToBrushConverter" />
         <Style TargetType="ListView">
@@ -180,7 +180,7 @@
                                     DisplayMemberBinding="{Binding ServiceCallDate}" />
 
                     <GridViewColumn Header="Дней у нас (мб не надо)"
-                                    DisplayMemberBinding="{Binding ElapsedTime}" />
+                                    DisplayMemberBinding="{Binding ElapsedDays}" />
 
                 </GridView>
             </ListView.View>
