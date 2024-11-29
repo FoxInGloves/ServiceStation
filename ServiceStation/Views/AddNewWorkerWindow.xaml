@@ -60,6 +60,22 @@
             <TextBox Text="{Binding MiddleName, Mode=TwoWay}" />
 
         </StackPanel>
+        
+        <Button HorizontalAlignment="Left"
+                Content="Отмена"
+                Command="{Binding CancelCommand}"
+                Background="Red">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource TupleConverter}">
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}"/>
+                    <Binding>
+                        <Binding.Source>
+                            <system:Boolean>false</system:Boolean>
+                        </Binding.Source>
+                    </Binding>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
 
         <Button HorizontalAlignment="Right"
                 Content="Ок"
@@ -71,23 +87,6 @@
                     <Binding>
                         <Binding.Source>
                             <system:Boolean>true</system:Boolean>
-                        </Binding.Source>
-                    </Binding>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
-
-        <Button HorizontalAlignment="Left"
-                Content="Отмена"
-                Command="{Binding CancelCommand}"
-                Background="Red">
-            
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource TupleConverter}">
-                    <Binding RelativeSource="{RelativeSource AncestorType=Window}"/>
-                    <Binding>
-                        <Binding.Source>
-                            <system:Boolean>false</system:Boolean>
                         </Binding.Source>
                     </Binding>
                 </MultiBinding>
