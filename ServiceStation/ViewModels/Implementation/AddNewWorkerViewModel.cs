@@ -48,22 +48,15 @@ public class AddNewWorkerViewModel : AbstractViewModel
 
     private void CloseWindow((Window? WindowToClose, bool DialogResult) parameters)
     {
-        /*if (parameters is null)
-        {
-            _logger.LogError("Closing window parameters is null");
-            return;
-        }*/
-
         if (parameters.WindowToClose is null)
         {
-            _logger.LogError("Parameter window is null");
+            _logger.LogError("Parameter AddNewWorkerWindow is null");
             return;
         }
         
         if (parameters.DialogResult is false)
         {
             parameters.WindowToClose.Close();
-            _logger.LogError("Closing window");
             return;
         }
         

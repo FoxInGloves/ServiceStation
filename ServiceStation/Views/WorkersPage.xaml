@@ -9,7 +9,7 @@
       HorizontalAlignment="Stretch"
       VerticalAlignment="Stretch"
       Name="WorkersPageName"
-      Title="Workers">
+      Title="Работники">
     <Page.Resources>
         <Style TargetType="ScrollViewer">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
