@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Services.Mapping.Abstraction;
 
@@ -31,7 +31,7 @@ public class WorkerMapper : IMapper<Worker, WorkerDto>
         var workerDto = new WorkerDto
         {
             Id = source.Id,
-            VehicleId = source.VehicleId,
+            //VehicleId = source.VehicleId,
             LastName = source.LastName,
             FirstName = source.FirstName,
             MiddleName = source.MiddleName,

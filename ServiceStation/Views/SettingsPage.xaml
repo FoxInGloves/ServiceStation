@@ -6,7 +6,7 @@
       HorizontalAlignment="Stretch"
       VerticalAlignment="Stretch"
       mc:Ignorable="d"
-      Title="SettingsPage">
+      Title="Настройки">
     <Grid>
         <TextBlock Text="Настройки"
                    FontSize="32"

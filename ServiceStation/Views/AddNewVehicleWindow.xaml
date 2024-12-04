@@ -6,7 +6,7 @@
         xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="AddNewVehicleWindow" Height="500" Width="660">
+        Title="Добавить новый автомобиль" Height="500" Width="660">
     <Window.Resources>
         <xamlConverters:TupleConverter x:Key="TupleConverter" />
         <Style x:Key="Title" TargetType="TextBlock">
@@ -65,18 +65,18 @@
 
                             <StackPanel Grid.Column="0">
                                 <TextBlock Text="Марка" />
-                                <TextBox Text="{Binding Path=LastName, Mode=TwoWay}" />
+                                <TextBox Text="{Binding Path=VehicleBrand}" />
 
                                 <TextBlock Text="Год выпуска" />
-                                <TextBox Text="{Binding FirstName, Mode=TwoWay}" />
+                                <TextBox Text="{Binding YearOfRelease}" />
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
                                 <TextBlock Text="Модель" />
-                                <TextBox Text="{Binding Path=LastName, Mode=TwoWay}" />
+                                <TextBox Text="{Binding Path=VehicleModel}" />
 
                                 <TextBlock Text="Номер гос. регистрации" />
-                                <TextBox Text="{Binding Path=LastName, Mode=TwoWay}" />
+                                <TextBox Text="{Binding Path=RegistrationNumber}" />
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -91,27 +91,43 @@
 
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="ФИО владельца" />
-                        <TextBox Text="{Binding FirstName, Mode=TwoWay}" />
+                        <TextBox Text="{Binding FullName}" />
                         
                                 <TextBlock Text="Улица" />
-                                <TextBox Text="{Binding MiddleName, Mode=TwoWay}" />
+                                <TextBox Text="{Binding Street}" />
                     </StackPanel>
                     
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Город" />
-                        <TextBox Text="{Binding FirstName, Mode=TwoWay}" />
+                        <TextBox Text="{Binding City}" />
 
                         <TextBlock Text="Дом"/>
-                        <TextBox Text="{Binding MiddleName, Mode=TwoWay}" />
+                        <TextBox Text="{Binding BuildingNumber}" />
                     </StackPanel>
                 </Grid>
 
             </StackPanel>
         </StackPanel>
 
+        <Button HorizontalAlignment="Left"
+                Content="Отмена"
+                Command="{Binding CloseWindowCommand}"
+                Background="Red">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource TupleConverter}">
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                    <Binding>
+                        <Binding.Source>
+                            <system:Boolean>false</system:Boolean>
+                        </Binding.Source>
+                    </Binding>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        
         <Button HorizontalAlignment="Right"
                 Content="Ок"
-                Command="{Binding SaveCommand}"
+                Command="{Binding CloseWindowCommand}"
                 Background="LawnGreen">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource TupleConverter}">
@@ -119,23 +135,6 @@
                     <Binding>
                         <Binding.Source>
                             <system:Boolean>true</system:Boolean>
-                        </Binding.Source>
-                    </Binding>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
-
-        <Button HorizontalAlignment="Left"
-                Content="Отмена"
-                Command="{Binding CancelCommand}"
-                Background="Red">
-
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource TupleConverter}">
-                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
-                    <Binding>
-                        <Binding.Source>
-                            <system:Boolean>false</system:Boolean>
                         </Binding.Source>
                     </Binding>
                 </MultiBinding>

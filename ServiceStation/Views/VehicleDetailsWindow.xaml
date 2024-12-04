@@ -5,34 +5,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:userControls="clr-namespace:ServiceStation.Views.UserControls"
         xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
+        x:Name="VehicleDetailsWindowName"
         ShowInTaskbar="False"
-        Title="VehicleDetailsWindow" Height="460" Width="800">
+        Title="Инфромация о машине" Height="480" Width="700">
     <Window.Resources>
         <xamlConverters:StringToBrushConverter x:Key="StringToBrushConverter" />
-        
+
         <Style x:Key="LeftContainer" TargetType="StackPanel">
             <Setter Property="Margin" Value="30,20,0,0" />
         </Style>
-        
+
         <Style x:Key="RightContainer" TargetType="StackPanel">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Margin" Value="40,20,30,0" />
         </Style>
-        
+
         <Style x:Key="MainIcon" TargetType="Image">
             <Setter Property="Height" Value="200" />
             <Setter Property="Width" Value="200" />
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
-        
+
         <Style x:Key="IconImage" TargetType="Image">
             <Setter Property="Height" Value="25" />
             <Setter Property="Width" Value="25" />
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
-        
+
         <Style TargetType="Button">
             <Setter Property="BorderThickness" Value="0" />
             <Style.Resources>
@@ -41,7 +45,7 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
         <Style x:Key="AddDefectButton" TargetType="Button">
             <Setter Property="Height" Value="30" />
             <Setter Property="Width" Value="45" />
@@ -55,7 +59,20 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
+        <Style x:Key="CloseButton" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <!--<Setter Property="VerticalAlignment" Value="Top"/>-->
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="13" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
         <Style TargetType="TextBox">
             <Style.Resources>
                 <Style TargetType="Border">
@@ -63,7 +80,7 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
         <Style TargetType="ComboBox">
             <Setter Property="Width" Value="Auto" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -73,13 +90,13 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
         <Style TargetType="ScrollViewer">
-            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -103,7 +120,7 @@
                          IsEnabled="{Binding IsInputEnabled, UpdateSourceTrigger=PropertyChanged}"
                          Height="30"
                          Width="120" />
-                <Button Command="{Binding ChangeInputRegistrationNumberEnabledCommand}"
+                <Button Command="{Binding ChangeInputRegistrationNumberEnabledAsyncCommand}"
                         Background="Transparent"
                         Height="30"
                         Width="30"
@@ -112,7 +129,7 @@
                 </Button>
             </StackPanel>
 
-            <ComboBox SelectedItem="{Binding SelectedStatus, Mode=TwoWay}"
+            <ComboBox SelectedItem="{Binding SelectedStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{Binding CollectionOfStatuses}"
                       Margin="0,20,0,0">
                 <ComboBox.ItemTemplate>
@@ -123,12 +140,18 @@
                             Text="{Binding Name}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
+
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:InvokeCommandAction Command="{Binding StatusChangedAsyncCommand}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
             </ComboBox>
 
             <TextBlock Text="Владелец:"
                        FontSize="14"
                        Margin="0,18, 0, 4" />
-            <Button Command="{Binding NavigateToOwnerDetailsWindowCommand}"
+            <Button Command="{Binding NavigateToOwnerDetailsWindowAsyncCommand}"
                     CommandParameter="{Binding OwnerId}"
                     Background="Transparent"
                     HorizontalAlignment="Left"
@@ -150,42 +173,62 @@
                        Text="Неисправности:" />
 
 
-            <Button Command="{Binding}"
+            <Button Command="{Binding AddNewDefectAsyncCommand}"
                     Content="+"
                     Margin="0,10"
                     HorizontalAlignment="Left"
                     Style="{StaticResource AddDefectButton}" />
 
             <ScrollViewer Width="400" Height="300">
-                <!--<WrapPanel Width="400" HorizontalAlignment="Stretch"
-                           Orientation="Horizontal">-->
 
-                    <ItemsControl ItemsSource="{Binding Defects}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel HorizontalAlignment="Stretch"
-                                           Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <userControls:ColorfulText BackgroundColor="{Binding BackgroundColor}"
-                                                           Text="{Binding Fault}"
-                                                           Margin="0,5, 5, 0">
+                <ItemsControl
+                    ItemsSource="{Binding CollectionOfDefects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, IsAsync=True}">
 
-                                    <userControls:ColorfulText.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Поменять" />
-                                            <MenuItem Header="Удалить"
-                                                      Command="{Binding}" />
-                                        </ContextMenu>
-                                    </userControls:ColorfulText.ContextMenu>
-                                </userControls:ColorfulText>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                <!--</WrapPanel>-->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Stretch"
+                                       Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <userControls:ColorfulText
+                                BackgroundColor="{Binding BackgroundColor,  UpdateSourceTrigger=PropertyChanged}"
+                                Text="{Binding Fault}"
+                                Margin="0,5, 5, 0">
+
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseDoubleClick">
+                                        <b:InvokeCommandAction
+                                            Command="{Binding DataContext.NavigateToDefectDetailsAsyncCommand,
+                                        RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding Id}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+
+                                <userControls:ColorfulText.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Поменять"
+                                                  Command="{Binding DataContext.RevertIsFixedStatusOfDefectCommand,
+                                                  Source={x:Reference VehicleDetailsWindowName}}"
+                                                  CommandParameter="{Binding Id}" />
+                                        <MenuItem Header="Удалить" 
+                                                  Command="{Binding DataContext.DeleteDefectAsyncCommand,
+                                                  Source={x:Reference VehicleDetailsWindowName}}"
+                                                  CommandParameter="{Binding Id}"/>
+                                    </ContextMenu>
+                                </userControls:ColorfulText.ContextMenu>
+                            </userControls:ColorfulText>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
+
+            <Button Grid.Column="1"
+                    Style="{StaticResource CloseButton}"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding  RelativeSource={RelativeSource AncestorType=Window}}"
+                    Content="Закрыть" />
         </StackPanel>
     </Grid>
 </Window>

@@ -14,7 +14,7 @@ public class Defect : AbstractEntity
     
     public bool IsFixed { get; set; }
     
-    public string StartDate { get; set; }
+    /*public DateTime StartDate { get; set; }
     
-    public string? EndDate { get; set; } //TODO переименовать
+    public DateTime EndDate { get; set; }*/
 }

@@ -8,9 +8,9 @@
       xmlns:xamlConverters="clr-namespace:ServiceStation.Services.XamlConverters"
       mc:Ignorable="d"
       Name="VehiclesPageName"
-      Title="Vehicles page"
       HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch">
+      VerticalAlignment="Stretch"
+      Title="Транспортные средства">
     <Page.Resources>
         <xamlConverters:StringToBrushConverter x:Key="StringToBrushConverter" />
         <Style TargetType="ListView">
@@ -94,8 +94,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
-                    <!--TODO сменить названия столбцов-->
+                    
                     <GridViewColumn Header="Транспортное средство"
                                     DisplayMemberBinding="{Binding BrandAndModel}" />
 
@@ -110,41 +109,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <!--<GridViewColumn Header="Проблемы">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding CollectionOfDefects}">
-                                    ~1~<ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-
-                                            <WrapPanel Orientation="Horizontal"
-                                                       MaxWidth="{Binding ActualWidth, Mode=OneWay, 
-                       RelativeSource={RelativeSource FindAncestor, 
-                       AncestorType={x:Type GridViewColumnHeader}}}"/>
-                                            
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>@1@
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            ~1~<StackPanel Orientation="Vertical">@1@
-                                                <userControls:ColorfulText Background="{Binding BackgroundColor}"
-                                                                           Text="{Binding Fault}"/>
-                                            ~1~</StackPanel>@1@
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
-
                     <GridViewColumn Header="Владелец"
                                     DisplayMemberBinding="{Binding OwnerName}">
-                        <!--<GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <userControls:ColorfulText Background="{Binding}"
-                                                           Text="{Binding OwnerName}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>-->
                     </GridViewColumn>
 
                     <!--TODO дописать bindings-->
@@ -180,7 +146,7 @@
                                     DisplayMemberBinding="{Binding ServiceCallDate}" />
 
                     <GridViewColumn Header="Дней у нас (мб не надо)"
-                                    DisplayMemberBinding="{Binding ElapsedTime}" />
+                                    DisplayMemberBinding="{Binding ElapsedDays}" />
 
                 </GridView>
             </ListView.View>

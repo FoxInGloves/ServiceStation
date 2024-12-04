@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Repository.Abstraction;
 using ServiceStation.Services.Mapping.Abstraction;
@@ -32,7 +32,7 @@ public class WorkersViewModel : AbstractViewModel
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
-        DeleteWorkerAsyncCommand = new AsyncRelayCommand<string>(DeleteWorkerAsync);
+        DeleteWorkerAsyncCommand = new AsyncRelayCommand<Guid>(DeleteWorkerAsync);
         AddNewWorkerAsyncCommand = new AsyncRelayCommand(AddNewWorker);
         NavigateToWorkerDetailsCommand = new AsyncRelayCommand<Guid>(NavigateToWorkerDetailsWindow);
         
@@ -59,19 +59,20 @@ public class WorkersViewModel : AbstractViewModel
         CollectionOfWorkers = new ObservableCollection<WorkerDto>(workersDtos);
     }
 
-    private async Task DeleteWorkerAsync(string? id)
+    private async Task DeleteWorkerAsync(Guid id)
     {
-        if (id is null)
-            return;
+        var confirmation = MessageBox.Show("Вы уверены?", "Подтверждение", MessageBoxButton.YesNo);
 
-        var deleteWorker = _unitOfWork.WorkersRepository.DeleteAsync(id);
-        var saveChangesAsync = _unitOfWork.SaveChangesAsync();
+        if (confirmation != MessageBoxResult.Yes) return;
+        
+        var deleteWorkerTask = _unitOfWork.WorkersRepository.DeleteByIdAsync(id);
+        var saveChangesTask = _unitOfWork.SaveChangesAsync();
 
-        var worker = CollectionOfWorkers!.First(w => w.Id.ToString().Equals(id));
+        var worker = CollectionOfWorkers!.First(w => w.Id.Equals(id));
         CollectionOfWorkers!.Remove(worker);
         
-        await deleteWorker;
-        await saveChangesAsync;
+        await deleteWorkerTask;
+        await saveChangesTask;
     }
 
     private async Task AddNewWorker()
@@ -111,7 +112,7 @@ public class WorkersViewModel : AbstractViewModel
 
         var dialog = newWorkerViewAndViewModel.Item1.ShowDialog();
         
-        if (dialog is not null)
+        if (dialog is null)
             return Error.Failure("WindowClosed", "New worker window closed");
 
         if (newWorkerViewAndViewModel.Item2 is not AddNewWorkerViewModel newWorkerViewModel )

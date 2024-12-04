@@ -6,7 +6,7 @@
       HorizontalAlignment="Stretch"
       VerticalAlignment="Stretch"
       mc:Ignorable="d"
-      Title="InfoPage">
+      Title="Информация о приложении">
     <Grid>
         <TextBlock Text="Данное приложение находится в Альфа-тестировании"
                    FontSize="16"

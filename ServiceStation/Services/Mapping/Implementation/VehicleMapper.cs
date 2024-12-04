@@ -1,4 +1,5 @@
-﻿using ServiceStation.Models.DTOs.Implementation;
+﻿using System.Collections;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Services.Mapping.Abstraction;
 
@@ -13,35 +14,54 @@ public class VehicleMapper : IMapper<Vehicle, VehicleDto>
     public VehicleDto MapToDto(Vehicle source)
     {
         var owner = _ownerMapper.MapToDto(source.Owner!);
-        
-        return new VehicleDto
+
+        IEnumerable<WorkerDto>? collectionOfWorkers = null;
+        IEnumerable<DefectDto>? collectionOfDefects = null;
+
+        if (source.CollectionOfWorkers is not null)
+        {
+            collectionOfWorkers = _workerMapper.MapToDtos(source.CollectionOfWorkers);
+        }
+
+        if (source.CollectionsOfDefects is not null)
+        {
+            collectionOfDefects = _defectMapper.MapToDtos(source.CollectionsOfDefects);
+        }
+
+        var vehicleDto = new VehicleDto
         {
             Id = source.Id,
             BrandAndModel = source.ModelOfVehicle?.Brand?.Name + " " + source.ModelOfVehicle?.Name,
             RegistrationNumber = source.RegistrationNumber,
+            OwnerId = owner.Id,
             StatusId = source.StatusId,
             Status = source.Status,
             YearOfRelease = source.YearOfRelease,
             ServiceCallDate = source.ServiceCallDate,
-            ElapsedTime = GetDays(source.ServiceCallDate, DateTime.Today.Date.ToString()),
+            ElapsedDays = DateOnly.FromDateTime(DateTime.Today.Date).DayNumber - source.ServiceCallDate.DayNumber,
             ModelOfVehicle = source.ModelOfVehicle,
             Owner = owner,
             OwnerName = owner.FullName,
-            CollectionOfWorkers = _workerMapper.MapToDtos(source.CollectionOfWorkers!),
-            CollectionsOfDefects = _defectMapper.MapToDtos(source.CollectionsOfDefects!)
+            CollectionOfWorkers = collectionOfWorkers,
+            CollectionsOfDefects = collectionOfDefects
         };
+
+        return vehicleDto;
     }
 
     public Vehicle MapToEntity(VehicleDto destination)
     {
-        throw new NotImplementedException();
-    }
+        var vehicle = new Vehicle
+        {
+            Id = destination.Id,
+            OwnerId = destination.OwnerId,
+            StatusId = destination.StatusId,
+            ModelOfVehicle = destination.ModelOfVehicle,
+            YearOfRelease = destination.YearOfRelease,
+            RegistrationNumber = destination.RegistrationNumber,
+            ServiceCallDate = destination.ServiceCallDate,
+        };
 
-    private string GetDays(string dateOne, string dateTwo)
-    {
-        var start = DateTime.Parse(dateOne);
-        var end = DateTime.Parse(dateTwo);
-        
-        return (end - start).TotalDays.ToString();
+        return vehicle;
     }
 }

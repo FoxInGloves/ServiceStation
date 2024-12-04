@@ -34,24 +34,34 @@ public class GenericRepository<TEntity>(ApplicationDatabaseContext context) : IG
         await _dbSet.AddAsync(entity);
     }
 
-    public async Task DeleteAsync(object id)
+    public async Task DeleteByIdAsync(object id)
     {
         var entityToDelete = await _dbSet.FindAsync(id);
         if (entityToDelete == null) return;
-        await DeleteAsync(entityToDelete);
+         Delete(entityToDelete);
     }
 
-    public async Task DeleteAsync(TEntity entityToDelete)
+    public void Delete(TEntity entityToDelete)
     {
-        await Task.Run(() =>
-        {
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 _dbSet.Attach(entityToDelete);
             }
 
             _dbSet.Remove(entityToDelete);
-        });
+    }
+
+    public void DeleteRange(IEnumerable<TEntity> entitiesToDelete)
+    {
+        var abstractEntities = entitiesToDelete as TEntity[] ?? entitiesToDelete.ToArray();
+        foreach (var entity in abstractEntities)
+        {
+            if (context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entity);
+            }
+        }
+        _dbSet.RemoveRange(abstractEntities);
     }
 
     public async Task UpdateAsync(TEntity entityToUpdate)

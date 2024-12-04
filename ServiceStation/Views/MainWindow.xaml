@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Background="WhiteSmoke"
         WindowState="Maximized"
-        Title="Наше название" Height="450" Width="800">
+        Title="Сервиный центр" Height="450" Width="800">
     <Window.Resources>
         <Style x:Key="PageNavigationButton" TargetType="Button">
             <Setter Property="Height" Value="35" />
@@ -82,7 +82,7 @@
             <Button Command="{Binding NavigateToWorkersPageCommandAsync}"
                     Style="{StaticResource PageNavigationButton}"
                     HorizontalContentAlignment="Left">
-                <!--TODO при смене картинки убрать margin-->
+                
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
                     <Image Source="/Resources/Images/engineer.png"/>

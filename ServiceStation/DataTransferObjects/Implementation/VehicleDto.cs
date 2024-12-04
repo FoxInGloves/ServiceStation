@@ -1,11 +1,11 @@
-﻿using ServiceStation.Models.DTOs.Abstraction;
+﻿using ServiceStation.DataTransferObjects.Abstraction;
 using ServiceStation.Models.Entities.Implementation;
 
-namespace ServiceStation.Models.DTOs.Implementation;
+namespace ServiceStation.DataTransferObjects.Implementation;
 
 public class VehicleDto : AbstractDto
 {
-    public Guid Id { get; set; }
+    public Guid OwnerId { get; set; }
     
     public Guid StatusId { get; set; }
     
@@ -13,13 +13,13 @@ public class VehicleDto : AbstractDto
     
     public string? OwnerName { get; set; }
     
-    public string YearOfRelease { get; set; }
+    public int YearOfRelease { get; set; }
     
     public string RegistrationNumber { get; set; }
     
-    public string ServiceCallDate { get; set; }
+    public DateOnly ServiceCallDate { get; set; }
     
-    public string ElapsedTime { get; set; }
+    public int ElapsedDays { get; set; }
     
     public OwnerDto? Owner { get; set; }
     

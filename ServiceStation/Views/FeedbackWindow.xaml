@@ -6,11 +6,11 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        Title="FeedbackWindow" Height="150" Width="210">
+        Title="Отзыв и предложения" Height="150" Width="210">
     <Grid>
         <TextBlock Text="Coming soon!"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   FontSize="22"/>
+                   FontSize="22" />
     </Grid>
 </Window>
