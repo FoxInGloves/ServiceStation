@@ -60,7 +60,6 @@
             </Style.Resources>
         </Style>
 
-        <!--TODO Везде как тут поставить скруглени кнопки закрытия на 11-->
         <Style x:Key="CloseButton" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Right" />
             <!--<Setter Property="VerticalAlignment" Value="Top"/>-->
@@ -69,7 +68,7 @@
             <Setter Property="Margin" Value="0,0,0,0" />
             <Style.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="11" />
+                    <Setter Property="CornerRadius" Value="13" />
                 </Style>
             </Style.Resources>
         </Style>
@@ -130,7 +129,7 @@
                 </Button>
             </StackPanel>
 
-            <ComboBox SelectedItem="{Binding SelectedStatus, Mode=TwoWay}"
+            <ComboBox SelectedItem="{Binding SelectedStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{Binding CollectionOfStatuses}"
                       Margin="0,20,0,0">
                 <ComboBox.ItemTemplate>

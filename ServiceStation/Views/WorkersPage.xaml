@@ -71,7 +71,6 @@
                                                      WorkerName="{Binding FullName}">
                             <userControls:WorkersPreview.ContextMenu>
                                 <ContextMenu>
-                                    <!--TODO посмотреть source-->
                                     <MenuItem Header="Удалить"
                                               Command="{Binding DataContext.DeleteWorkerAsyncCommand,
                                                   Source={x:Reference WorkersPageName}}"
