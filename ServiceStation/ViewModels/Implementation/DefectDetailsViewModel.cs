@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Repository.Abstraction;
 using ServiceStation.Services;
@@ -230,7 +230,7 @@ public class DefectDetailsViewModel : AbstractViewModel
     {
         if (Fault is null || _defect is null) throw new NullReferenceException(nameof(_defect));
         
-        if (!Fault.Equals(_defect.Fault))
+        if (!_defect.Fault.Equals(Fault))
         {
             var defectToUpdate = await _unitOfWork.DefectsRepository.GetByIdAsync(_defect.Id);
             if (defectToUpdate is null) throw new KeyNotFoundException();
@@ -244,9 +244,9 @@ public class DefectDetailsViewModel : AbstractViewModel
     
     private async Task VerifyDescriptionChange()
     {
-        if (Description is null || _defect is null) throw new NullReferenceException(nameof(_defect));
+        if (_defect is null) throw new NullReferenceException(nameof(_defect));
         
-        if (!Description.Equals(_defect.Fault))
+        if (_defect.Description != Description)
         {
             var defectForUpdate = await _unitOfWork.DefectsRepository.GetByIdAsync(_defect.Id);
             if (defectForUpdate is null) throw new KeyNotFoundException();

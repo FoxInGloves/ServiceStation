@@ -53,8 +53,7 @@ public class AddNewVehicleViewModel : AbstractViewModel
             Brand = brand,
             Name = VehicleModel
         };
-
-        //TODO разобраться с кастом string к int
+        
         var vehicle = new Vehicle
         {
             OwnerId = owner.Id,
@@ -71,9 +70,7 @@ public class AddNewVehicleViewModel : AbstractViewModel
     
     private Owner GetOwner()
     {
-        //TODO по человечески парсить имя
         var name = FullName.Trim().Split(' ');
-
         var middleName = name.Length > 2 ? name[2] : string.Empty;
 
         var owner = new Owner

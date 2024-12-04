@@ -7,7 +7,6 @@ using ServiceStation.Services.Navigation.Abstraction;
 using ServiceStation.Services.ResultT.Abstraction;
 using ServiceStation.Services.ResultT.Implementation;
 using ServiceStation.ViewModels.Abstraction;
-using static System.String;
 
 namespace ServiceStation.Services.Navigation.Implementation;
 
@@ -19,6 +18,8 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
         try
         {
             var viewModel = serviceProvider.GetService<TViewModel>();
+            if (viewModel is null)
+                throw new NullReferenceException("ViewModel is null");
             
             var pageType = GetViewType<Page>(typeof(TViewModel));
 
@@ -29,7 +30,7 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
                 return Error.Failure("PageInstanceError", $"Failed to create '{pageType}' instance.");
 
             page.DataContext = viewModel;
-            return ResultT<(Page, AbstractViewModel)>.Success((page, viewModel)!);
+            return ResultT<(Page, AbstractViewModel)>.Success((page, viewModel));
         }
         catch (Exception ex)
         {
@@ -54,15 +55,14 @@ public class NavigationService(ILogger<NavigationService> logger, IServiceProvid
                 return Error.Failure("WindowInstanceError", $"Failed to create '{windowType}' instance.");
 
             window.DataContext = viewModel;
-            return ResultT<(Window, AbstractViewModel)>.Success((window, viewModel)!);
+            return ResultT<(Window, AbstractViewModel)>.Success((window, viewModel));
         }
         catch (Exception ex)
         {
             return Error.Failure(ex.Message, "An unexpected error occurred while creating the window.");
         }
     }
-
-    //TODO рефакторинг названия
+    
     private Type? GetViewType<TView>(Type viewModelType) where TView : class
     {
         var importViewType = typeof(TView);
