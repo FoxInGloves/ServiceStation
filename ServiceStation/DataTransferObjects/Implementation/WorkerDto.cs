@@ -1,13 +1,9 @@
-﻿using ServiceStation.Models.DTOs.Abstraction;
+﻿using ServiceStation.DataTransferObjects.Abstraction;
 
-namespace ServiceStation.Models.DTOs.Implementation;
+namespace ServiceStation.DataTransferObjects.Implementation;
 
 public class WorkerDto : AbstractDto
 {
-    public Guid Id { get; set; }
-    
-    //public Guid VehicleId { get; set; }
-    
     public Guid DefectId { get; set; }
     
     public string FullName { get; set; }

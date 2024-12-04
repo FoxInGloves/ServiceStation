@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Services.Mapping.Abstraction;
 

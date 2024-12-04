@@ -1,12 +1,10 @@
-﻿using ServiceStation.Models.DTOs.Abstraction;
+﻿using ServiceStation.DataTransferObjects.Abstraction;
 using ServiceStation.Models.Entities.Implementation;
 
-namespace ServiceStation.Models.DTOs.Implementation;
+namespace ServiceStation.DataTransferObjects.Implementation;
 
 public class VehicleDto : AbstractDto
 {
-    public Guid Id { get; set; }
-    
     public Guid OwnerId { get; set; }
     
     public Guid StatusId { get; set; }
