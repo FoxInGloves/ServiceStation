@@ -12,7 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DataTransferObjects\Abstraction\" />
+      <Folder Include="DataTransferObjects\" />
+      <Folder Include="Migrations\" />
       <Folder Include="Models\Entities\" />
     </ItemGroup>
 

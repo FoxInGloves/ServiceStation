@@ -3,10 +3,11 @@ using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Repository.Abstraction;
 using ServiceStation.Services;
+using ServiceStation.Services.CollectionExtensions;
 using ServiceStation.Services.Mapping.Abstraction;
 using ServiceStation.Services.Navigation.Abstraction;
 using ServiceStation.Services.ResultT.Abstraction;
@@ -25,7 +26,6 @@ public class VehicleDetailsViewModel : AbstractViewModel
 
     private VehicleDto? _vehicle;
     private OwnerDto? _owner;
-    private ModelOfVehicle? _model;
     
     private Status? _selectedStatus;
     
@@ -124,37 +124,11 @@ public class VehicleDetailsViewModel : AbstractViewModel
 
         _vehicle = vehicleDto;
         _owner = vehicleDto.Owner ?? throw new NullReferenceException(nameof(vehicle.Owner));
-        _model = vehicle.ModelOfVehicle ?? throw new NullReferenceException(nameof(vehicle.ModelOfVehicle));
-
+        
         var updateVehicleTask = UpdateVehicle();
         UpdateOwner();
         
         await updateVehicleTask;
-
-        //TODO убрать заглушку генерации данных
-        /*for (var i = 0; i < 18; i++)
-        {
-            var def = new[]
-            {
-                new DefectDto
-                {
-                    Fault = $"Defect{i}",
-                    IsFixed = false,
-                    BackgroundColor = "#f52020"
-                },
-                new DefectDto
-                {
-                    Fault = $"Defect{i}",
-                    IsFixed = true,
-                    BackgroundColor = "#02b83e"
-                }
-            };
-
-            var random = new Random();
-            random.Shuffle(def);
-
-            Defects?.Add(def[0]);
-        }*/
     }
 
     private async Task UpdateVehicle()
@@ -191,17 +165,15 @@ public class VehicleDetailsViewModel : AbstractViewModel
         
         var updateDefectTask = _unitOfWork.DefectsRepository.UpdateAsync(defect);
         
-        var defectDtoToUpdate = CollectionOfDefects!.First(d => d.Id == defect.Id);
-        var indexDefectToUpdate = CollectionOfDefects!.IndexOf(defectDtoToUpdate);
+        var defectDto = _defectMapper.MapToDto(defect);
+        //defectDtoToUpdate.BackgroundColor = EntityColorService.GetStatusColor(defect.IsFixed);
         
-        defectDtoToUpdate.IsFixed = defect.IsFixed;
-        defectDtoToUpdate.BackgroundColor = EntityColorService.GetStatusColor(defect.IsFixed);
+        if (!CollectionOfDefects!.Update(x => x.Id == defect.Id, defectDto))
+        {
+            _logger.LogWarning("Defect not updated");
+        }
         
-        CollectionOfDefects[indexDefectToUpdate] = defectDtoToUpdate;
-        /*CollectionOfDefects[a].BackgroundColor = EntityColorService.GetStatusColor(defect.IsFixed);
-        CollectionOfDefects[a].IsFixed = defect.IsFixed;*/
-        
-        OnPropertyChanged(nameof(CollectionOfDefects));
+        //OnPropertyChanged(nameof(CollectionOfDefects));
         
         await updateDefectTask;
         await _unitOfWork.SaveChangesAsync();
@@ -321,6 +293,18 @@ public class VehicleDetailsViewModel : AbstractViewModel
             _logger.LogError("Failed to open defect details window. \nCode: {Code}\nDescription: {Description}",
                 result.Error?.Code, result.Error?.Description);
         }
+
+        var defect = await _unitOfWork.DefectsRepository.GetByIdAsync(defectId);
+        if (defect == null) throw new NullReferenceException(nameof(defectId));
+        
+        var defectDto = _defectMapper.MapToDto(defect);
+
+        if (!CollectionOfDefects!.Update(x => x.Id == defect.Id, defectDto))
+        {
+            _logger.LogWarning("Defect not found");
+        }
+
+        //OnPropertyChanged(nameof(CollectionOfDefects));
     }
     
     private async Task<ResultT<bool>> OpenDefectDetailsWindow(Guid defectId)

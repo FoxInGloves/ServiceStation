@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using ServiceStation.Models.DTOs.Implementation;
+using ServiceStation.DataTransferObjects.Implementation;
 using ServiceStation.Models.Entities.Implementation;
 using ServiceStation.Repository.Abstraction;
 using ServiceStation.Services.Mapping.Abstraction;
@@ -67,8 +67,6 @@ public sealed class VehiclesViewModel : AbstractViewModel
         var vehicleDto = _vehicleMapper.MapToDtos(vehicles);
 
         CollectionOfVehicles = new ObservableCollection<VehicleDto>(vehicleDto);
-        string a;
-        string b;
     }
 
     //TODO рефактор метода
@@ -175,16 +173,9 @@ public sealed class VehiclesViewModel : AbstractViewModel
         var vehicle = await _unitOfWork.VehicleRepository.GetByIdAsync(vehicleId);
         if (vehicle is null) return;
         
-        /*var defects = await _unitOfWork.DefectsRepository.GetAsync(x => x.VehicleId.Equals(vehicleId));
-        _unitOfWork.DefectsRepository.DeleteRange(defects); */
-        
-        //var deleteOwnerTask = _unitOfWork.OwnersRepository.DeleteByIdAsync(vehicle.OwnerId);
         var deleteVehicleTask = _unitOfWork.VehicleRepository.DeleteByIdAsync(vehicleId);
         CollectionOfVehicles?.Remove(CollectionOfVehicles.First(x => x.Id == vehicleId));
         
-        //await _unitOfWork.DefectsRepository.DeleteByIdAsync(vehicleId);
-
-        //await deleteOwnerTask;
         await deleteVehicleTask;
         await _unitOfWork.SaveChangesAsync();
     }
@@ -204,9 +195,10 @@ public sealed class VehiclesViewModel : AbstractViewModel
         
         var vehicleDtoInCollection = CollectionOfVehicles!.First(x => x.Id == vehicle.Id);
         var vehicleDtoIndex = CollectionOfVehicles!.IndexOf(vehicleDtoInCollection);
-        
-        //CollectionOfVehicles!.Insert(vehicleDtoIndex, vehicleDto);
         CollectionOfVehicles![vehicleDtoIndex] = vehicleDto;
+        
+        
+        
         OnPropertyChanged(nameof(CollectionOfVehicles));
     }
 
@@ -230,9 +222,6 @@ public sealed class VehiclesViewModel : AbstractViewModel
         await vehicleDetailsViewModel.UpdateAsync(SelectedVehicle!.Id);
 
         vehicleDetailsWindowAndViewModel.Item1.ShowDialog();
-        
-        /*var vehicleToUpdate = 
-        await _unitOfWork.VehicleRepository.UpdateAsync()*/
 
         return ResultT<bool>.Success(true);
     }

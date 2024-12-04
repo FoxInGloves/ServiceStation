@@ -15,14 +15,6 @@ public sealed class ApplicationDatabaseContext : DbContext
         Database.EnsureCreated();
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        const string connectionString =
-            "Host=localhost;Port=5432;Database=service_station;Username=postgres;Password=123456789";
-
-        optionsBuilder.UseLazyLoadingProxies().UseNpgsql(connectionString);
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BrandOfVehicle>().HasKey(o => o.Id);
