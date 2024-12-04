@@ -1,11 +1,9 @@
-﻿using ServiceStation.Models.DTOs.Abstraction;
+﻿using ServiceStation.DataTransferObjects.Abstraction;
 
-namespace ServiceStation.Models.DTOs.Implementation;
+namespace ServiceStation.DataTransferObjects.Implementation;
 
 public class OwnerDto : AbstractDto
 {
-    public Guid Id { get; set; }
-    
     public string FirstName { get; set; }
     
     public string LastName { get; set; }

@@ -16,5 +16,5 @@ public class Defect : AbstractEntity
     
     /*public DateTime StartDate { get; set; }
     
-    public DateTime EndDate { get; set; } //TODO переименовать*/
+    public DateTime EndDate { get; set; }*/
 }

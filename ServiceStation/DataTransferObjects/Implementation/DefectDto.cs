@@ -1,11 +1,9 @@
-﻿using ServiceStation.Models.DTOs.Abstraction;
+﻿using ServiceStation.DataTransferObjects.Abstraction;
 
-namespace ServiceStation.Models.DTOs.Implementation;
+namespace ServiceStation.DataTransferObjects.Implementation;
 
 public class DefectDto : AbstractDto
 {
-    public Guid Id { get; set; }
-    
     public Guid VehicleId { get; set; }
     
     public Guid WorkerId { get; set; }
@@ -20,5 +18,5 @@ public class DefectDto : AbstractDto
     
     /*public DateTime StartDate { get; set; }
     
-    public DateTime EndDate { get; set; } //TODO переименовать*/
+    public DateTime EndDate { get; set; }*/
 }
